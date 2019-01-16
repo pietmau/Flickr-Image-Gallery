@@ -8,12 +8,11 @@ import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.viewmodel.LiveDataMainViewModel
 import com.pppp.flickrimagegallery.features.main.viewmodel.MainViewModel
 import com.pppp.flickrimagegallery.features.main.viewmodel.ViewStateStore
-import com.pppp.uscases.UseCasesModule
 import com.pppp.uscases.ViewState
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [UseCasesModule::class])
+@Module//(includes = [UseCasesModule::class])
 class MainModule {
 
     @Provides
