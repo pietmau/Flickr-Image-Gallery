@@ -8,11 +8,12 @@ import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.viewmodel.LiveDataMainViewModel
 import com.pppp.flickrimagegallery.features.main.viewmodel.MainViewModel
 import com.pppp.flickrimagegallery.features.main.viewmodel.ViewStateStore
+import com.pppp.uscases.UseCasesModule
 import com.pppp.uscases.ViewState
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = [UseCasesModule::class])
 class MainModule {
 
     @Provides
@@ -33,6 +34,6 @@ class MainModule {
     class MainViewModelFactory(val store: ViewStateStore) :
         ViewModelProvider.Factory {
 
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = LiveDataMainViewModel(store) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = throw Exception("")//LiveDataMainViewModel(store) as T
     }
 }
