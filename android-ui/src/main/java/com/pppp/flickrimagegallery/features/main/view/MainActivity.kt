@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.flickrimagegallery.features.main.viewmodel.MainViewModel
+import com.pppp.uscases.MainIntent
 
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         Handler().postDelayed({
-            //mainViewModel.accept()
+            mainViewModel.accept(MainIntent.GetDetail(""))
         }, 5 * 1000)
     }
 }

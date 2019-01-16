@@ -14,8 +14,8 @@ class ViewStateStore<T : ViewState>(initialState: T) {
     fun observe(owner: LifecycleOwner, observer: (T: Any) -> Unit) =
         liveData.observe(owner, Observer { observer(it) })
 
-    private fun dispatchState(state: T) {
-        liveData.value = state
+    fun dispatchState(state: T) {
+        liveData.postValue(state)
     }
 
     fun state() = liveData.value
