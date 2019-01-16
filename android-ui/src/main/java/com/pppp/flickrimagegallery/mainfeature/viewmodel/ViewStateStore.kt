@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
-class StateStore<T : Any>(initialState: T) {
+class ViewStateStore<T : Any>(initialState: T) {
 
     private val liveData = MutableLiveData<T>().apply {
         value = initialState
@@ -17,5 +17,5 @@ class StateStore<T : Any>(initialState: T) {
         liveData.value = state
     }
 
-    fun state() = liveData.value!!
+    fun state() = liveData.value
 }
