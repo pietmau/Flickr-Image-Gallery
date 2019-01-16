@@ -22,18 +22,17 @@ class MainModule {
     ): MainViewModel = ViewModelProviders.of(mainActivity, factory).get(LiveDataMainViewModel::class.java)
 
     @Provides
-    fun provideStore(): ViewStateStore<ViewState> = ViewStateStore(ViewState.Loading)
+    fun provideStore(): ViewStateStore = ViewStateStore(ViewState.Loading)
 
     @Provides
     fun provideLifecycleOwner(mainActivity: MainActivity) = mainActivity as LifecycleOwner
 
     @Provides
-    fun provideFactory(owner: LifecycleOwner, store: ViewStateStore<ViewState>): ViewModelProvider.Factory =
-        MainViewModelFactory(owner, store)
+    fun provideFactory(store: ViewStateStore): ViewModelProvider.Factory = MainViewModelFactory(store)
 
-    class MainViewModelFactory(val owner: LifecycleOwner, val store: ViewStateStore<ViewState>) :
+    class MainViewModelFactory(val store: ViewStateStore) :
         ViewModelProvider.Factory {
 
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = LiveDataMainViewModel(owner, store) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = LiveDataMainViewModel(store) as T
     }
 }

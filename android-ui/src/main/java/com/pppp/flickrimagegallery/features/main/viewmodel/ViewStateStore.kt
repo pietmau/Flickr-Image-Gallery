@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.pppp.uscases.ViewState
 
-class ViewStateStore<T : ViewState>(initialState: T) {
+class ViewStateStore(initialState: ViewState) {
 
-    private val liveData = MutableLiveData<T>().apply {
+    private val liveData = MutableLiveData<ViewState>().apply {
         value = initialState
     }
 
-    fun observe(owner: LifecycleOwner, observer: (T: Any) -> Unit) =
+    fun observe(owner: LifecycleOwner, observer: (ViewState) -> Unit) =
         liveData.observe(owner, Observer { observer(it) })
 
-    fun dispatchState(state: T) {
+    fun dispatchState(state: ViewState) {
         liveData.postValue(state)
     }
 

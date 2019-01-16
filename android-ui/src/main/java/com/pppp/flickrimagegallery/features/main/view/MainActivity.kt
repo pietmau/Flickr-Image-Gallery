@@ -2,6 +2,7 @@ package com.pppp.flickrimagegallery.features.main.view
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.flickrimagegallery.features.main.viewmodel.MainViewModel
 import com.pppp.uscases.MainIntent
@@ -16,8 +17,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        mainViewModel.observe {
-
+        mainViewModel.observe(this) {
+            Log.e("foo",it.toString())
         }
         Handler().postDelayed({
             mainViewModel.accept(MainIntent.GetDetail(""))

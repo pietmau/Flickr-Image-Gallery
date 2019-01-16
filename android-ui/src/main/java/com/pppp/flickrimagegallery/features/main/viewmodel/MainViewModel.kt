@@ -2,15 +2,15 @@ package com.pppp.flickrimagegallery.features.main.viewmodel
 
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import com.pppp.uscases.MainIntent
 import com.pppp.uscases.ViewState
 
 class LiveDataMainViewModel(
-    private val lifecycleOwner: LifecycleOwner,
-    private val store: ViewStateStore<in ViewState> = ViewStateStore(ViewState.Loading)
-) : MainViewModel {
+    private val store: ViewStateStore = ViewStateStore(ViewState.Loading)
+) : ViewModel(), MainViewModel {
 
-    override fun observe(observer: (T: Any) -> Unit) {
+    override fun observe(lifecycleOwner: LifecycleOwner, observer: (ViewState) -> Unit) {
         store.observe(lifecycleOwner, observer)
     }
 
@@ -20,6 +20,6 @@ class LiveDataMainViewModel(
 }
 
 interface MainViewModel : Consumer<MainIntent> {
-    fun observe(observer: (Any) -> Unit)
+    fun observe(lifecycleOwner: LifecycleOwner, observer: (ViewState) -> Unit)
     override fun accept(intent: MainIntent)
 }
