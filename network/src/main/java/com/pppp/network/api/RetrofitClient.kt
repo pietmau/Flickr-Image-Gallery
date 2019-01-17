@@ -1,5 +1,6 @@
 package com.pppp.network.api
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.simpleframework.xml.convert.AnnotationStrategy
@@ -15,6 +16,7 @@ class RetrofitClient : Client {
         .baseUrl("https://api.flickr.com/")
         .client(client)
         .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(Persister(AnnotationStrategy())))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
     private val service = retrofit.create(Api::class.java)
 
