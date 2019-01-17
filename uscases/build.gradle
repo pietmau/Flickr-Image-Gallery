@@ -3,6 +3,9 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
+    implementation 'com.spotify.mobius:mobius-core:1.2.0'
+    testImplementation 'com.spotify.mobius:mobius-test:1.2.0'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.dagger:dagger:2.20'
     implementation 'com.google.dagger:dagger-android:2.20'
