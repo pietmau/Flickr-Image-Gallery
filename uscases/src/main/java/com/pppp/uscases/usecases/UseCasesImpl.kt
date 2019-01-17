@@ -4,9 +4,12 @@ import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.spotify.mobius.functions.Consumer
 
-class UseCasesImpl() : UseCases {
+class UseCasesImpl(private val networkUseCase: NetworkUseCase) : UseCases {
 
     override fun getAllImages(effect: Effect.GetAllImages, consumer: Consumer<Event>) {
+        networkUseCase.getAllImages(effect) { event: Event ->
+            consumer.accept(event)
+        }
     }
 
 }

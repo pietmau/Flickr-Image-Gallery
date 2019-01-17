@@ -1,5 +1,6 @@
 package com.pppp.uscases
 
+import com.pppp.uscases.usecases.NetworkUseCase
 import com.pppp.uscases.usecases.UseCases
 import com.pppp.uscases.usecases.UseCasesImpl
 import com.spotify.mobius.Mobius
@@ -11,7 +12,7 @@ import dagger.Provides
 class UseCasesModule {
 
     @Provides
-    fun provideUseCases(): UseCases = UseCasesImpl()
+    fun provideUseCases(networkUseCase: NetworkUseCase): UseCases = UseCasesImpl(networkUseCase)
 
     @Provides
     fun loopFactory(usecases: UseCases): MobiusLoop.Builder<Model, Event, Effect> =
