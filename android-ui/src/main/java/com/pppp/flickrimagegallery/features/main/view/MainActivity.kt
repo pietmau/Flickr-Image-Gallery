@@ -2,8 +2,8 @@ package com.pppp.flickrimagegallery.features.main.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.pppp.uscases.newstates.Event
-import com.pppp.uscases.newstates.Model
+import com.pppp.uscases.Event
+import com.pppp.uscases.Model
 import com.spotify.mobius.Connection
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.functions.Consumer

@@ -1,4 +1,4 @@
-package com.pppp.uscases.newstates
+package com.pppp.uscases
 
 sealed class Model {
     object Starting : Model()
