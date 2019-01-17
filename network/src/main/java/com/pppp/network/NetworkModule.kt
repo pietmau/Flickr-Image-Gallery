@@ -11,5 +11,5 @@ class NetworkModule {
 
     @Inject
     @Provides
-    fun provideNetwork(): NetworkUseCase = RetrofitNetworkUseCase(RetrofitClient)
+    fun provideNetwork(): NetworkUseCase = RetrofitNetworkUseCase(RetrofitClient())
 }
