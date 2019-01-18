@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.item.view.*
 class EntryHolder(itemView: View, private val imageLoader: ImageLoader) :
     RecyclerView.ViewHolder(itemView) {
 
-    fun bind(model: com.pppp.entites.Entry, onItemClick: OnItemClick?) {
+    fun bind(model: com.pppp.entites.FlickrImage, onItemClick: OnItemClick?) {
         imageLoader.loadImage(itemView.image, model.imageUrl, {
             itemView.setOnClickListener {
                 onItemClick?.invoke(model, this.adapterPosition)

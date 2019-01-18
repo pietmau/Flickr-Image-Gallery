@@ -7,7 +7,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.flickrimagegallery.R
-import com.pppp.entites.Entry
 import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
 
@@ -39,11 +38,11 @@ class FlickrRecyclerView @JvmOverloads constructor(
         layoutManager = GridLayoutManager(this.context, span)
     }
 
-    fun onEntriesAvailable(results: List<com.pppp.entites.Entry>) {
+    fun onEntriesAvailable(results: List<com.pppp.entites.FlickrImage>) {
         flickrAdapter.setItems(results)
     }
 
-    private fun onItemClicked(entry: com.pppp.entites.Entry, position: Int) {
+    private fun onItemClicked(entry: com.pppp.entites.FlickrImage, position: Int) {
         clickBlocker.executeIfAppropriate(this, position) {
             onItemClick?.invoke(entry, position)
         }
@@ -58,4 +57,4 @@ class FlickrRecyclerView @JvmOverloads constructor(
     }
 }
 
-typealias OnItemClick = (com.pppp.entites.Entry, Int) -> Unit
+typealias OnItemClick = (com.pppp.entites.FlickrImage, Int) -> Unit

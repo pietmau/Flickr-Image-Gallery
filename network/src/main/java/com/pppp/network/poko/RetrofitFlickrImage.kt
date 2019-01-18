@@ -1,10 +1,10 @@
 package com.pppp.network.poko
 
-import com.pppp.entites.Entry
+import com.pppp.entites.FlickrImage
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 
-data class RetrofitEntry(
+data class RetrofitFlickrImage(
     @field:Element(name = "id")
     override var id: String? = null,
 
@@ -26,11 +26,8 @@ data class RetrofitEntry(
     override var published: String? = null,
 
     override var displaycategories: String? = null
-) : Entry {
-    override val imageUrl = getImageLink(link)
-
-    private fun getImageLink(link: List<RetrofitLink>?) =
-        link?.find { it.type?.equals(TYPE, true) == true }?.href
+) : FlickrImage {
+    override val imageUrl by lazy { link?.find { it.type?.equals(TYPE, true) == true }?.href }
 
     companion object {
         private val TYPE = "image/jpeg"

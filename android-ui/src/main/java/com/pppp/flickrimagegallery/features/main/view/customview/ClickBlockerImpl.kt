@@ -2,8 +2,9 @@ package com.pppp.mvicoreapp.main.view.customview
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Inject
 
-class ClickBlockerImpl : ClickBlocker {
+class ClickBlockerImpl @Inject constructor() : ClickBlocker {
     private var time = System.currentTimeMillis()
 
     override fun executeIfAppropriate(

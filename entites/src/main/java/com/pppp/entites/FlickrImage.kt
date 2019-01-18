@@ -1,6 +1,6 @@
 package com.pppp.entites
 
-interface Entry {
+interface FlickrImage {
     var id: String?
     val content: Content?
     val author: Author?
