@@ -9,11 +9,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 
-class RetrofitClient : Client {
+class RetrofitClient(BASE_URL: String = "https://api.flickr.com/") : Client {
     private val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
     private val client: OkHttpClient = OkHttpClient.Builder().addNetworkInterceptor(interceptor).build()
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.flickr.com/")
+        .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(Persister(AnnotationStrategy())))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())

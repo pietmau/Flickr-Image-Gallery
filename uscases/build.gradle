@@ -12,8 +12,13 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.20'
     kapt 'com.google.dagger:dagger-android-processor:2.20'
     kapt 'com.google.dagger:dagger-compiler:2.20'
-    testImplementation 'junit:junit:4.12'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
+    testImplementation "io.mockk:mockk:1.9.kotlin12"
+    testImplementation "org.slf4j:slf4j-nop:1.6.1"
+    testCompile("org.assertj:assertj-core:3.11.1")
+
     api project(path: ':entites')
 }
 

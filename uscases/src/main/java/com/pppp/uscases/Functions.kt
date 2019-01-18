@@ -5,7 +5,7 @@ import com.spotify.mobius.Next
 
 fun update(model: Model, event: Event): Next<Model, Effect> =
     when (event) {
-        is Event.LoadComplete -> Next.next(Model.Complete(event.results))
+        is Event.LoadComplete -> Next.next(Model.Complete(event.images))
         else -> Next.next(model)
     }
 

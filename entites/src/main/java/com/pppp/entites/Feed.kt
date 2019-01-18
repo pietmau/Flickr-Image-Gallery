@@ -6,7 +6,7 @@ interface Feed {
     var title: String?
     var updated: String?
     val link: List<Link>?
-    val entry: List<FlickrImage>?
+    val entry: List<FlickrImage>? //TODO change name
     var subtitle: String?
     val generator: Generator?
     var xmlns: String?
