@@ -1,5 +1,6 @@
-package com.pppp.uscases
+package com.pppp.uscases.di
 
+import com.pppp.uscases.*
 import com.pppp.uscases.usecases.NetworkUseCase
 import com.pppp.uscases.usecases.UseCases
 import com.pppp.uscases.usecases.UseCasesImpl

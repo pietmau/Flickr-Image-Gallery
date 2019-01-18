@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.flickrimagegallery.R
-import com.pppp.network.poko.Entry
+import com.pppp.entites.Entry
 
 internal class FlickrAdapter(private val loader: ImageLoader) :
     RecyclerView.Adapter<EntryHolder>() {
-    private val entries: MutableList<Entry> = mutableListOf()
+    private val entries: MutableList<com.pppp.entites.Entry> = mutableListOf()
     var onItemClick: OnItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryHolder {
@@ -27,15 +27,15 @@ internal class FlickrAdapter(private val loader: ImageLoader) :
         holder.unbind()
     }
 
-    fun setItems(newResults: List<Entry>) {
+    fun setItems(newResults: List<com.pppp.entites.Entry>) {
         DiffUtil.calculateDiff(FlickrDiffCallback(entries, newResults)).dispatchUpdatesTo(this)
         entries.clear()
         entries.addAll(newResults)
     }
 
     private class FlickrDiffCallback(
-        private val old: List<Entry>,
-        private val new: List<Entry>
+        private val old: List<com.pppp.entites.Entry>,
+        private val new: List<com.pppp.entites.Entry>
     ) : DiffUtil.Callback() {
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =

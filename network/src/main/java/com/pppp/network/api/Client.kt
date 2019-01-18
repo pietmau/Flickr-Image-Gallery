@@ -1,8 +1,8 @@
 package com.pppp.network.api
 
-import com.pppp.network.poko.Feed
+import com.pppp.network.poko.RetrofitFeed
 import kotlinx.coroutines.Deferred
 
 interface Client {
-    fun getPics(): Deferred<Feed>
+    fun getPics(): Deferred<RetrofitFeed>
 }

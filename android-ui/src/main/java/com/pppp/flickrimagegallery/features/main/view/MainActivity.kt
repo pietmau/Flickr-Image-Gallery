@@ -9,7 +9,6 @@ import com.spotify.mobius.Connection
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.functions.Consumer
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.main.*
 import javax.inject.Inject
 
 
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onComplete(result: List<Any>) {
-        recyler.
+        //recyler.
     }
 
     override fun onPause() {

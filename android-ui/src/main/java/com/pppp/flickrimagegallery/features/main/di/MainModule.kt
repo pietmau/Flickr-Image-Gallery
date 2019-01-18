@@ -7,7 +7,7 @@ import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
-import com.pppp.uscases.UseCasesModule
+import com.pppp.uscases.di.UseCasesModule
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.MobiusAndroid
 import dagger.Module

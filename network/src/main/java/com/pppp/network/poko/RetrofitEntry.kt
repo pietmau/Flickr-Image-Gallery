@@ -1,26 +1,27 @@
 package com.pppp.network.poko
 
+import com.pppp.entites.Entry
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 
 data class RetrofitEntry(
-    @field:Element(name = "title")
+    @field:Element(name = "id")
     override var id: String? = null,
 
-    override var content: Content? = null,
+    override var content: RetrofitContent? = null,
 
-    override var author: Author? = null,
+    override var author: RetrotifAuthor? = null,
 
     @field:Element(name = "title")
     override var title: String? = null,
 
-    override var category: Category? = null,
+    override var category: RetrofitCategory? = null,
 
     override var updated: String? = null,
 
-    @set:ElementList(name = "link", required = false, inline = true)
-    @get:ElementList(name = "link", required = false, inline = true)
-    override var link: List<Link>? = null,
+    @set:ElementList(name = "link", required = false, inline = true, entry = "link")
+    @get:ElementList(name = "link", required = false, inline = true, entry = "link")
+    override var link: List<RetrofitLink>? = null,
 
     override var published: String? = null,
 
@@ -28,7 +29,7 @@ data class RetrofitEntry(
 ) : Entry {
     override val imageUrl = getImageLink(link)
 
-    private fun getImageLink(link: List<Link>?) =
+    private fun getImageLink(link: List<RetrofitLink>?) =
         link?.find { it.type?.equals(TYPE, true) == true }?.href
 
     companion object {

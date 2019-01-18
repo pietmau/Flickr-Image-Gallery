@@ -1,18 +1,19 @@
 package com.pppp.network.poko
 
+import com.pppp.entites.Link
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Root
 
 @Root
-data class Link(
+data class RetrofitLink(
     @field:Attribute(name = "rel", required = false)
-    var rel: String? = null,
+    override var rel: String? = null,
 
     @field:Attribute(name = "type", required = false)
-    var type: String? = null,
+    override var type: String? = null,
 
     @field:Attribute(name = "href", required = false)
-    var href: String? = null
-)
+    override var href: String? = null
+) : Link
 			
 			

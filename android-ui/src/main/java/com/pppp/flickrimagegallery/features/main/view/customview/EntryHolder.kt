@@ -2,13 +2,12 @@ package com.pppp.mvicoreapp.main.view.customview
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.pppp.network.poko.Entry
 import kotlinx.android.synthetic.main.item.view.*
 
 class EntryHolder(itemView: View, private val imageLoader: ImageLoader) :
     RecyclerView.ViewHolder(itemView) {
 
-    fun bind(model: Entry, onItemClick: OnItemClick?) {
+    fun bind(model: com.pppp.entites.Entry, onItemClick: OnItemClick?) {
         imageLoader.loadImage(itemView.image, model.imageUrl, {
             itemView.setOnClickListener {
                 onItemClick?.invoke(model, this.adapterPosition)

@@ -1,13 +1,13 @@
-package com.pppp.network.poko
+package com.pppp.entites
 
 interface Entry {
     var id: String?
-    var content: Content?
-    var author: Author?
+    val content: Content?
+    val author: Author?
     var title: String?
-    var category: Category?
+    val category: Category?
     var updated: String?
-    var link: List<Link>?
+    val link: List<Link>?
     var published: String?
     var displaycategories: String?
     val imageUrl: String?

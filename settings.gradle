@@ -1,1 +1,1 @@
-include ':android-ui', ':uscases', ':android-viewmodel', ':network'
+include ':android-ui', ':uscases', ':network', ':entites'

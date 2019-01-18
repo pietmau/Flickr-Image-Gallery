@@ -2,7 +2,7 @@ package com.pppp.network
 
 
 import com.pppp.network.api.Client
-import com.pppp.network.poko.Feed
+import com.pppp.network.poko.RetrofitFeed
 import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.pppp.uscases.usecases.NetworkUseCase
@@ -19,7 +19,7 @@ class RetrofitNetworkUseCase(
     override fun getAllImages(effect: Effect.GetAllImages, handler: (Event) -> Unit) {
         launch {
             try {
-                val response: Feed = client.getPics().await()
+                val response: RetrofitFeed = client.getPics().await()
                 val results= response.entry ?: emptyList()
                 handler(Event.LoadComplete(results))
             } catch (exception: Exception) {
