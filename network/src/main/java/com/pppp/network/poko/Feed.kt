@@ -25,7 +25,7 @@ data class Feed(
 
     @get: ElementList(name = "entry", required = false, inline = true)
     @set: ElementList(name = "entry", required = false, inline = true)
-    var entry: List<Entry>? = null,
+    var entry: List<RetrofitEntry>? = null,
 
     @field: Attribute(required = false)
     var subtitle: String? = null,
