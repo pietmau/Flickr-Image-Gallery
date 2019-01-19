@@ -65,7 +65,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.0.0"
     kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
 
-    implementation project(path: ':uscases')
+    implementation project(path: ':usecases')
     implementation project(path: ':network')
 
     androidTestImplementation "io.mockk:mockk:1.9"

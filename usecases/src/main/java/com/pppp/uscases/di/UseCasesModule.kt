@@ -17,7 +17,5 @@ class UseCasesModule {
 
     @Provides
     fun loopFactory(usecases: UseCases): MobiusLoop.Builder<Model, Event, Effect> =
-        Mobius.loop(::update) { consumer ->
-            Handler(consumer, usecases)
-        }.init(::init)
+        Mobius.loop(::update) { consumer -> Handler(consumer, usecases) }.init(::init)
 }
