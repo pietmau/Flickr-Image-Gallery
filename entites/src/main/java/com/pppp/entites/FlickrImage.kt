@@ -1,14 +1,14 @@
 package com.pppp.entites
 
 interface FlickrImage {
-    var id: String?
+    val id: String?
     val content: Content?
     val author: Author?
-    var title: String?
+    val title: String?
     val category: Category?
-    var updated: String?
+    val updated: String?
     val link: List<Link>?
-    var published: String?
-    var displaycategories: String?
+    val published: String?
+    val displaycategories: String?
     val imageUrl: String?
 }

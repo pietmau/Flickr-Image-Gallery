@@ -1,5 +1,6 @@
 package com.pppp.flickrimagegallery.application.di
 
+import com.pppp.flickrimagegallery.RepositoryModule
 import com.pppp.flickrimagegallery.application.App
 import com.pppp.flickrimagegallery.features.main.di.MainActivtyModule
 import com.pppp.network.NetworkModule
@@ -10,5 +11,5 @@ interface AppComponent {
     fun inject(app: App)
 }
 
-@Component(modules = [AndroidInjectionModule::class, MainActivtyModule::class, NetworkModule::class])
+@Component(modules = [AndroidInjectionModule::class, MainActivtyModule::class, NetworkModule::class, RepositoryModule::class])
 abstract class AppComponentImpl : AppComponent
