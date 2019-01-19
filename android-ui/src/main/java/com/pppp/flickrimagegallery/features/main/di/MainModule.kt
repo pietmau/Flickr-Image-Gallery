@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.pppp.flickrimagegallery.features.main.view.MainActivity
+import com.pppp.flickrimagegallery.features.main.view.controller.Controller
+import com.pppp.flickrimagegallery.features.main.view.controller.MobiusController
 import com.pppp.mvicoreapp.main.view.customview.ClickBlocker
 import com.pppp.mvicoreapp.main.view.customview.ClickBlockerImpl
 import com.pppp.mvicoreapp.main.view.customview.ImageLoader
@@ -25,23 +27,23 @@ class MainModule {
     fun provideController(
         mainActivity: MainActivity,
         factory: AndroidViewModelFactory
-    ): MobiusLoop.Controller<Model, Event> =
+    ): Controller<Model, Event> =
         ViewModelProviders.of(mainActivity, factory).get(AndroidViewModel::class.java).controller
 
     @Inject
     @Provides
     fun provideClickBllocker(blocker: ClickBlockerImpl): ClickBlocker = blocker
 
-    @Inject
     @Provides
     fun provideLoader(): ImageLoader = PicassoImageLoader
 
-    data class AndroidViewModel(val controller: MobiusLoop.Controller<Model, Event>) : ViewModel()
+    data class AndroidViewModel(val controller: Controller<Model, Event>) : ViewModel()
 
-    class AndroidViewModelFactory @Inject constructor(val loopFactory: MobiusLoop.Builder<Model, Event, Effect>) :
+    class AndroidViewModelFactory @Inject constructor(private val loopFactory: MobiusLoop.Builder<Model, Event, Effect>) :
         ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AndroidViewModel(MobiusAndroid.controller(loopFactory, Model.Starting)) as T
+            AndroidViewModel(MobiusController<Model, Event>(MobiusAndroid.controller(loopFactory, Model.Starting))) as T
     }
+
 }

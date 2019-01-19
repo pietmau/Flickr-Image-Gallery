@@ -4,13 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.mvicoreapp.main.view.customview.ClickBlocker
 import com.pppp.mvicoreapp.main.view.customview.ImageLoader
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
-import com.spotify.mobius.Connection
-import com.spotify.mobius.MobiusLoop
-import com.spotify.mobius.functions.Consumer
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main.*
 import javax.inject.Inject
@@ -18,8 +16,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var controller: MobiusLoop.Controller<Model, Event>
-    private lateinit var eventConsumer: Consumer<Event>
+    lateinit var controller: Controller<Model, Event>
     @Inject
     lateinit var clickBlocker: ClickBlocker
     @Inject
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         recyler.clickBlocker = clickBlocker//TODO
         recyler.loader = imageLoader
         recyler.onItemClick = { item, position -> }
-        controller.connect(this::connectViews);
+        controller.connect(::render);
     }
 
     private fun render(model: Model) {
@@ -59,19 +56,5 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         controller.disconnect();
     }
-
-    private fun connectViews(eventConsumer: Consumer<Event>): Connection<Model> {
-        this.eventConsumer = eventConsumer
-
-        return object : Connection<Model> {
-            override fun accept(model: Model) {
-                render(model)
-            }
-
-            override fun dispose() { /* NoOp */
-            }
-        }
-    }
-
 }
 
