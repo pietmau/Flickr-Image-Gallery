@@ -8,9 +8,9 @@ import com.pppp.entites.*
 // For simplicity mapping only id, title image url and time stamp
 @Entity
 internal data class RoomFlickrImage(
-    var timestamp: Long = System.currentTimeMillis(), override
+    var timestamp: Long = System.currentTimeMillis(),
     @PrimaryKey
-    val id: String,
+    override val id: String,
     override val title: String?,
     override val imageUrl: String?
 ) : FlickrImage {

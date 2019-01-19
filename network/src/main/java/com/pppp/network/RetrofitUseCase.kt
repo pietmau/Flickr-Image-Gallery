@@ -15,7 +15,7 @@ class RetrofitUseCase(
     override val coroutineContext: CoroutineDispatcher = Main
 ) : UseCase, CoroutineScope {
 
-    override fun accept(handler: (Event) -> Unit) {
+    override fun execute(handler: (Event) -> Unit) {
         launch {
             try {
                 val response: Feed = client.getPics().await()

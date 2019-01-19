@@ -36,7 +36,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return calls bacl`() {
         //WHEN
-        useCase.accept(handler)
+        useCase.execute(handler)
         // THEN
         verify { handler.invoke(any<Event>()) }
         confirmVerified(handler)
@@ -45,7 +45,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return result`() {
         //WHEN
-        useCase.accept(handler)
+        useCase.execute(handler)
         // THEN
         val captured = slot.captured as Event.LoadComplete
         val images = captured.images
@@ -57,7 +57,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
         //WHEN
-        useCase.accept(handler)
+        useCase.execute(handler)
         // THEN
         val captured = slot.captured as Event.Error
         assertEquals(TEXT, captured.throwable.message)

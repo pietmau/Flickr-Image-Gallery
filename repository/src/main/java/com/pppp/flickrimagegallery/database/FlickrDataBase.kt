@@ -6,7 +6,10 @@ import com.pppp.flickrimagegallery.dao.FlickrDao
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
 
 @Database(entities = [RoomFlickrImage::class], version = 1)
-internal abstract class RoomFlickrDataBase : RoomDatabase(), FlickrDatabase {
-    override abstract fun dao(): FlickrDao
+internal abstract class FlickrDataBase : RoomDatabase() {
+    abstract fun dao(): FlickrDao
 }
 
+internal fun FlickrDataBase.insert(images: List<RoomFlickrImage>) {
+    dao().insert(images)
+}

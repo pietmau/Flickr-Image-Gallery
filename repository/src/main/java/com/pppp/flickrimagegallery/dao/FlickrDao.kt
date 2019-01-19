@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
 
-// TODO make all things internal
+
 @Dao
 internal abstract class FlickrDao {
 

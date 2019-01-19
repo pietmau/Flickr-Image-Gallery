@@ -18,8 +18,8 @@ internal class UseCasesImplTest {
 
     @BeforeEach
     internal fun setUp() {
-        clearMocks(consumer)
-        every { useCase.accept(capture(slot)) } answers
+        clearMocks(consumer, useCase)
+        every { useCase.execute(capture(slot)) } answers
                 {
                     slot.captured.invoke(event)
                 }
@@ -33,7 +33,7 @@ internal class UseCasesImplTest {
         // WHEN
         uscases.accept(Effect.GetAllImages, consumer)
         //THEN
-        verify { useCase.accept(any<(Event) -> Unit>()) }
+        verify(exactly = 1) { useCase.execute(any<(Event) -> Unit>()) }
         confirmVerified(useCase)
     }
 
