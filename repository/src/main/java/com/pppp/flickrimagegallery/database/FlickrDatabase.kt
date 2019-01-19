@@ -1,7 +1,9 @@
 package com.pppp.flickrimagegallery.database
 
-import com.pppp.flickrimagegallery.dao.FlickrDao
+import com.pppp.entites.FlickrImage
 
-internal interface FlickrDatabase {
-    fun dao(): FlickrDao
+//TODO make internal
+interface FlickrDatabase<in T:FlickrImage> {
+
+    fun insert(images: List<T>)
 }

@@ -1,7 +1,7 @@
 package com.pppp.entites
 
 interface FlickrImage {
-    val id: String?
+    val id: String
     val content: Content?
     val author: Author?
     val title: String?
