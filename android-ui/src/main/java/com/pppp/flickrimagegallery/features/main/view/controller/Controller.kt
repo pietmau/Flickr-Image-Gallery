@@ -4,6 +4,6 @@ interface Controller<M, E> {
     fun stop()
     fun start()
     fun disconnect()
-    fun connect(accep: ((M) -> Unit)? = null, dis: (() -> Unit)? = null)
+    fun connect(accept: ((M) -> Unit)? = null, dispose: (() -> Unit)? = null)
     fun accept(event: E)
 }
