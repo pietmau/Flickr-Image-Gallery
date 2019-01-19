@@ -2,7 +2,8 @@ package com.pppp.flickrimagegallery.application
 
 import android.app.Activity
 import android.app.Application
-import com.pppp.flickrimagegallery.application.di.DaggerAppComponent
+import com.pppp.flickrimagegallery.application.di.AppComponent
+import com.pppp.flickrimagegallery.application.di.DaggerAppComponentImpl
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class App : Application(), HasActivityInjector {
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -20,7 +22,8 @@ class App : Application(), HasActivityInjector {
             return
         }
         LeakCanary.install(this)
-        DaggerAppComponent.create().inject(this)
+        val appComponent = DaggerAppComponentImpl.create()
+        appComponent.inject(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingActivityInjector

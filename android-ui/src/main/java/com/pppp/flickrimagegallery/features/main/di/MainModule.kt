@@ -21,8 +21,9 @@ import dagger.Provides
 import javax.inject.Inject
 
 @Module(includes = [UseCasesModule::class])
-class MainModule {
+object MainModule {
 
+    @JvmStatic
     @Provides
     fun provideController(
         mainActivity: MainActivity,
@@ -30,10 +31,11 @@ class MainModule {
     ): Controller<Model, Event> =
         ViewModelProviders.of(mainActivity, factory).get(AndroidViewModel::class.java).controller
 
-    @Inject
+    @JvmStatic
     @Provides
-    fun provideClickBllocker(blocker: ClickBlockerImpl): ClickBlocker = blocker
+    fun provideClickBllocker(): ClickBlocker = ClickBlockerImpl()
 
+    @JvmStatic
     @Provides
     fun provideLoader(): ImageLoader = PicassoImageLoader
 
