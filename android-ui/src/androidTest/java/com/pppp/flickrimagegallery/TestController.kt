@@ -4,7 +4,7 @@ import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
 
-class testController: Controller<Model, Event> {
+class TestController: Controller<Model, Event> {
     override fun stop() {
 
     }

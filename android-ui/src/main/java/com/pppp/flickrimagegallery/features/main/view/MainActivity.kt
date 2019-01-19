@@ -1,7 +1,10 @@
 package com.pppp.flickrimagegallery.features.main.view
 
 import android.os.Bundle
+import android.view.View.GONE
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
@@ -12,7 +15,6 @@ import com.pppp.uscases.Model
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main.*
 import javax.inject.Inject
-
 
 class MainActivity : AppCompatActivity() {
     @Inject
@@ -29,13 +31,24 @@ class MainActivity : AppCompatActivity() {
         recyler.clickBlocker = clickBlocker//TODO
         recyler.loader = imageLoader
         recyler.onItemClick = { item, position -> }
-        controller.connect(::render);
+        controller.connect(accept = ::render);
     }
 
     private fun render(model: Model) {
         when (model) {
             is Model.Complete -> onComplete(model.result)
+            is Model.Starting, is Model.Loading -> onLoading()
+            is Model.Error -> onError(model.throwable.localizedMessage)
         }
+    }
+
+    private fun onError(message: String?) {
+        progress.visibility = GONE
+        Snackbar.make(container, message ?: getString(R.string.error), LENGTH_LONG).show()
+    }
+
+    private fun onLoading() {
+
     }
 
     private fun onComplete(result: List<FlickrImage>) {

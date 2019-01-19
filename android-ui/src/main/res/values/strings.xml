@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FlickrImageGallery</string>
     <string name="image_transition">image_transition</string>
+    <string name="error">Error</string>
 </resources>
