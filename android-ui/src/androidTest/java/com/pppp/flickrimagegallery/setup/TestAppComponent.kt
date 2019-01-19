@@ -1,4 +1,4 @@
-package com.pppp.flickrimagegallery
+package com.pppp.flickrimagegallery.setup
 
 import com.pppp.flickrimagegallery.application.di.AppComponent
 import dagger.Component

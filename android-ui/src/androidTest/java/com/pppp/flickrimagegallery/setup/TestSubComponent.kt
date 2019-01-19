@@ -1,4 +1,4 @@
-package com.pppp.flickrimagegallery
+package com.pppp.flickrimagegallery.setup
 
 import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import dagger.Subcomponent

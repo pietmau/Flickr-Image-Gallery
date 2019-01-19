@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onComplete(result: List<FlickrImage>) {
+        progress.visibility = GONE
         recyler.onEntriesAvailable(result)
     }
 

@@ -10,6 +10,8 @@ import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.application.App
 import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
+import com.pppp.flickrimagegallery.setup.DaggerTestAppComponent
+import com.pppp.flickrimagegallery.setup.TestModule
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
 import io.mockk.*
@@ -25,8 +27,9 @@ private const val TEXT = "TEXT"
 class MainActivityEspressoTest {
     private val controller: Controller<Model, Event> = mockk(relaxed = true)
     private val capturingSlot: CapturingSlot<(Model) -> Unit> = slot()
-    private val throwable:Throwable = mockk()
-    private val error = Model.Error(throwable)// Mockk unable to mock data class property?
+    private val throwable: Throwable = mockk()
+    private val error =
+        Model.Error(throwable)// Mockk unable to mock data class constructor property?
     private val image: FlickrImage = mockk()
     private val complete = Model.Complete(listOf(image))
 
@@ -35,8 +38,8 @@ class MainActivityEspressoTest {
         override fun beforeActivityLaunched() {
             val app =
                 InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as App
-            val component =
-                DaggerTestAppComponent.builder().testModule(TestModule(controller)).build()
+            val testModule = TestModule(controller)
+            val component = DaggerTestAppComponent.builder().testModule(testModule).build()
             app.appComponent = component
             component.inject(app)
             every { controller.connect(accept = capture(capturingSlot)) } just Runs
@@ -88,6 +91,14 @@ class MainActivityEspressoTest {
         pushToUi(complete)
         // THEN
         onView(withId(R.id.recyler)).check(matches(hasDescendant(withText(TEXT))))
+    }
+
+    @Test
+    internal fun when_complete_hides_progress() {
+        // WHEN
+        pushToUi(complete)
+        // THEN
+        onView(withId(R.id.progress)).check(matches(not(isDisplayed())))
     }
 
 
