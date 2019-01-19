@@ -4,18 +4,18 @@ package com.pppp.network
 import com.pppp.entites.Feed
 import com.pppp.network.api.Client
 import com.pppp.uscases.Event
-import com.pppp.uscases.usecases.NetworkUseCase
+import com.pppp.uscases.usecases.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 
-class RetrofitNetworkUseCase(
+class RetrofitUseCase(
     private val client: Client,
     override val coroutineContext: CoroutineDispatcher = Main
-) : NetworkUseCase, CoroutineScope {
+) : UseCase, CoroutineScope {
 
-    override fun getAllImages(handler: (Event) -> Unit) {
+    override fun accept(handler: (Event) -> Unit) {
         launch {
             try {
                 val response: Feed = client.getPics().await()

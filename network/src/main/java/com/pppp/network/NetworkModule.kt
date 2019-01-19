@@ -1,16 +1,20 @@
 package com.pppp.network
 
 import com.pppp.network.api.RetrofitClient
-import com.pppp.uscases.usecases.NetworkUseCase
+import com.pppp.uscases.Effect
+import com.pppp.uscases.di.EffectKey
+import com.pppp.uscases.usecases.UseCase
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
 import kotlinx.coroutines.Dispatchers.Main
-import javax.inject.Inject
 
 @Module
 class NetworkModule {
 
-    @Inject
     @Provides
-    fun provideNetwork(): NetworkUseCase = RetrofitNetworkUseCase(RetrofitClient("https://api.flickr.com/"), Main)
+    @IntoMap
+    @EffectKey(Effect.GetAllImages::class)
+    fun provideNetwork(): UseCase =
+        RetrofitUseCase(RetrofitClient("https://api.flickr.com/"), Main)
 }

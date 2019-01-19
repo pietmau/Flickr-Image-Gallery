@@ -11,7 +11,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 
 @TestInstance(PER_CLASS)
 internal class UseCasesImplTest {
-    private val networkUseCase: NetworkUseCase = mockk()
+    private val useCase: UseCase = mockk()
     private val consumer: Consumer<Event> = mockk()
     private var slot: CapturingSlot<(Event) -> Unit> = slot()
     private val event: Event = mockk()
@@ -19,7 +19,7 @@ internal class UseCasesImplTest {
     @BeforeEach
     internal fun setUp() {
         clearMocks(consumer)
-        every { networkUseCase.getAllImages(capture(slot)) } answers
+        every { useCase.accept(capture(slot)) } answers
                 {
                     slot.captured.invoke(event)
                 }
@@ -29,20 +29,20 @@ internal class UseCasesImplTest {
     @Test
     internal fun `when get images then calls network`() {
         // GIVEN
-        val uscases = UseCasesImpl(networkUseCase)
+        val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
         // WHEN
-        uscases.getAllImages(Effect.GetAllImages, consumer)
+        uscases.accept(Effect.GetAllImages, consumer)
         //THEN
-        verify { networkUseCase.getAllImages(any<(Event) -> Unit>()) }
-        confirmVerified(networkUseCase)
+        verify { useCase.accept(any<(Event) -> Unit>()) }
+        confirmVerified(useCase)
     }
 
     @Test
     internal fun `when network returns then event is returned`() {
         // GIVEN
-        val uscases = UseCasesImpl(networkUseCase)
+        val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
         // WHEN
-        uscases.getAllImages(Effect.GetAllImages, consumer)
+        uscases.accept(Effect.GetAllImages, consumer)
         //THEN
         verify(exactly = 1) { consumer.accept(event) }
         confirmVerified(consumer)

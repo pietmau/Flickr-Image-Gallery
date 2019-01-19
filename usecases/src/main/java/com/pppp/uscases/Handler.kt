@@ -11,7 +11,7 @@ class Handler(
 
     override fun accept(effect: Effect) {
         when (effect) {
-            is Effect.GetAllImages -> usecases.getAllImages(effect, consumer)
+            is Effect.GetAllImages -> usecases.accept(effect, consumer)
         }
     }
 

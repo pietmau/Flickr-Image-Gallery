@@ -15,11 +15,11 @@ import org.junit.jupiter.api.TestInstance
 import kotlin.coroutines.CoroutineContext
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class RetrofitNetworkUseCaseTest : CoroutineScope {
+internal class RetrofitUseCaseTest : CoroutineScope {
     private val TEXT = "text"
     override val coroutineContext: CoroutineContext = Unconfined
     private val client: Client = mockk()
-    private val useCase: RetrofitNetworkUseCase = RetrofitNetworkUseCase(client, Unconfined)
+    private val useCase: RetrofitUseCase = RetrofitUseCase(client, Unconfined)
     private val handler: (Event) -> Unit = mockk()
     private val feed: Feed = mockk()
     private val entries: List<FlickrImage> = mockk()
@@ -36,7 +36,7 @@ internal class RetrofitNetworkUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return calls bacl`() {
         //WHEN
-        useCase.getAllImages(handler)
+        useCase.accept(handler)
         // THEN
         verify { handler.invoke(any<Event>()) }
         confirmVerified(handler)
@@ -45,7 +45,7 @@ internal class RetrofitNetworkUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return result`() {
         //WHEN
-        useCase.getAllImages(handler)
+        useCase.accept(handler)
         // THEN
         val captured = slot.captured as Event.LoadComplete
         val images = captured.images
@@ -57,7 +57,7 @@ internal class RetrofitNetworkUseCaseTest : CoroutineScope {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
         //WHEN
-        useCase.getAllImages(handler)
+        useCase.accept(handler)
         // THEN
         val captured = slot.captured as Event.Error
         assertEquals(TEXT, captured.throwable.message)
