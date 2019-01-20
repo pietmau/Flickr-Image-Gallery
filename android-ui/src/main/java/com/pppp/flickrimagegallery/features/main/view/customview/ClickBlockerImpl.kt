@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Inject
 
+//TODO Remove
 class ClickBlockerImpl @Inject constructor() : ClickBlocker {
     private var time = System.currentTimeMillis()
 

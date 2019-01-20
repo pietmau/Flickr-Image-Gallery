@@ -4,13 +4,15 @@ import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
+
 object PicassoImageLoader : ImageLoader {
+    private const val DEFAULT_SIZE = 400
 
     override fun loadImage(view: ImageView, url: String?, success: Success?, failure: Failure?) {
         url ?: return
         Picasso.get()
             .load(url)
-            .resize(400, 400)
+            .resize(DEFAULT_SIZE, DEFAULT_SIZE)
             .centerCrop()
             .into(view, object : Callback {
                 override fun onSuccess() {

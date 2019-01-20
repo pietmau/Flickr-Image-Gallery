@@ -13,7 +13,6 @@ import com.pppp.mvicoreapp.main.view.customview.PicassoImageLoader
 import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
-import com.pppp.uscases.di.UseCasesModule
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.MobiusAndroid
 import dagger.Module
@@ -41,11 +40,14 @@ object MainModule {
 
     data class AndroidViewModel(val controller: Controller<Model, Event>) : ViewModel()
 
-    class AndroidViewModelFactory @Inject constructor(private val loopFactory: MobiusLoop.Builder<Model, Event, Effect>) :
+    class AndroidViewModelFactory
+    @Inject constructor(private val loopFactory: MobiusLoop.Builder<Model, Event, Effect>) :
         ViewModelProvider.Factory {
 
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AndroidViewModel(MobiusController<Model, Event>(MobiusAndroid.controller(loopFactory, Model.Starting))) as T
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            val mobiusController = MobiusAndroid.controller(loopFactory, Model.Starting)
+            val controller = MobiusController<Model, Event>(mobiusController)
+            return AndroidViewModel(controller) as T
+        }
     }
-
 }
