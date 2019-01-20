@@ -1,6 +1,7 @@
 package com.pppp.flickrimagegallery
 
 import com.pppp.flickrimagegallery.repository.FlickrRepository
+import com.pppp.network.utils.Logger
 import com.pppp.uscases.Effect
 import com.pppp.uscases.di.EffectKey
 import com.pppp.uscases.usecases.UseCase
@@ -15,5 +16,8 @@ object RepositoryModule {
     @Provides
     @IntoMap
     @EffectKey(Effect.GetAllImages::class)
-    fun provideUseCase(repo: FlickrRepository): UseCase = RepositoryUseCase(repo)
+    fun provideUseCase(repo: FlickrRepository, logger: Logger): UseCase =
+        RepositoryUseCase(repo, logger)
+
+
 }

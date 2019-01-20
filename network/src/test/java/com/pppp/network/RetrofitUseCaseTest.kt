@@ -3,8 +3,11 @@ package com.pppp.network
 import com.pppp.entites.Feed
 import com.pppp.entites.FlickrImage
 import com.pppp.network.api.Client
+import com.pppp.network.utils.AndroidLogger
 import com.pppp.uscases.Event
 import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.async
@@ -12,21 +15,30 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.coroutines.CoroutineContext
 
+@ExtendWith(MockKExtension::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class RetrofitUseCaseTest : CoroutineScope {
     private val TEXT = "text"
     override val coroutineContext: CoroutineContext = Unconfined
-    private val client: Client = mockk()
-    private val useCase: RetrofitUseCase = RetrofitUseCase(client, Unconfined)
-    private val handler: (Event) -> Unit = mockk()
-    private val feed: Feed = mockk()
-    private val entries: List<FlickrImage> = mockk()
+    @MockK
+    private lateinit var client: Client
+    private lateinit var useCase: RetrofitUseCase
+    @MockK
+    private lateinit var handler: (Event) -> Unit
+    @MockK
+    private lateinit var feed: Feed
+    @MockK
+    private lateinit var entries: List<FlickrImage>
+    @MockK(relaxed = true)
+    private lateinit var logger: AndroidLogger
     private val slot: CapturingSlot<Event> = slot()
 
     @BeforeEach
     internal fun setUp() {
+        useCase = RetrofitUseCase(client, logger, Unconfined)
         every { client.getPics() } returns async { feed }
         every { feed.entry } returns entries
         every { handler.invoke(capture(slot)) } just Runs
@@ -54,6 +66,17 @@ internal class RetrofitUseCaseTest : CoroutineScope {
 
     @Test
     internal fun `when exception then returns error`() {
+        // GIVEN
+        every { client.getPics() } answers { throw Exception(TEXT) }
+        //WHEN
+        useCase.execute(handler)
+        // THEN
+        val captured = slot.captured as Event.Error
+        assertEquals(TEXT, captured.throwable.message)
+    }
+
+    @Test
+    internal fun `when exception then logs`() {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
         //WHEN

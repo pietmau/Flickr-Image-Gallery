@@ -1,6 +1,7 @@
 package com.pppp.flickrimagegallery.repository
 
 import com.pppp.entites.Feed
+import com.pppp.flickrimagegallery.TEXT
 import com.pppp.flickrimagegallery.database.FlickrDataBase
 import com.pppp.flickrimagegallery.database.getLatestImages
 import com.pppp.flickrimagegallery.database.insert
@@ -8,6 +9,7 @@ import com.pppp.flickrimagegallery.mapper.Mapper
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
 import com.pppp.network.api.Client
 import com.pppp.network.poko.RetrofitFlickrImage
+import com.pppp.network.utils.AndroidLogger
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
@@ -37,12 +39,14 @@ internal class FlickrRepositoryImplTest {
     private lateinit var retrofitFlickrImage: RetrofitFlickrImage
     @MockK
     private lateinit var roomFlickrImage: RoomFlickrImage
+    @MockK(relaxed = true)
+    private lateinit var logger: AndroidLogger
 
     @BeforeEach
     internal fun setUp() {
         clearMocks(client, mapper, database)
         val list = listOf(retrofitFlickrImage)
-        repo = FlickrRepositoryImpl(client, database, mapper)
+        repo = FlickrRepositoryImpl(client, database, mapper, logger)
         every { client.getPics() } returns deferred
         coEvery { deferred.await() } returns feed
         every { feed.entry } returns list
@@ -77,5 +81,18 @@ internal class FlickrRepositoryImplTest {
         runBlocking { repo.getPics() }
         // THEN
         verify { database.getLatestImages(MAX_PICS) }
+        confirmVerified(database)
+    }
+
+    @Test
+    internal fun `when errors queries logs`() {
+        // GIVEN
+        clearMocks(database)
+        // WHEN
+        every { client.getPics() } throws Exception(TEXT)
+        runBlocking { repo.getPics() }
+        // THEN
+        verify { logger.w(ofType(String::class), ofType(String::class)) }
+        confirmVerified(logger)
     }
 }
