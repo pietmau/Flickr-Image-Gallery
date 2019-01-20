@@ -1,9 +1,8 @@
-package com.pppp.mvicoreapp.main.view.customview
+package com.pppp.flickrimagegallery.features.main.view.customview
 
 import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-
 
 object PicassoImageLoader : ImageLoader {
     private const val DEFAULT_SIZE = 400

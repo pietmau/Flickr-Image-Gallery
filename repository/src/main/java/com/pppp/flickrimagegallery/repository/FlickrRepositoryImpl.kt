@@ -30,5 +30,4 @@ internal class FlickrRepositoryImpl(
             logger.w(TAG, exception.localizedMessage)
             database.getLatestImages(MAX_PICS)
         }
-
 }

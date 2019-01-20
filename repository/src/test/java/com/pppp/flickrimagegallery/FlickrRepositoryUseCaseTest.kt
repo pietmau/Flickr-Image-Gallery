@@ -5,9 +5,19 @@ import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.repository.FlickrRepository
 import com.pppp.network.utils.AndroidLogger
 import com.pppp.uscases.Event
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.clearMocks
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers.Unconfined
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -40,7 +50,7 @@ internal class FlickrRepositoryUseCaseTest {
     internal fun setUp() {
         clearMocks(handler)
         useCase = RepositoryUseCase(repo, logger, Unconfined)
-        coEvery() { repo.getPics() } returns images
+        coEvery { repo.getPics() } returns images
         coEvery { deferred.await() } returns feed
         every { feed.entry } returns images
         useCase.execute(handler)
@@ -51,7 +61,6 @@ internal class FlickrRepositoryUseCaseTest {
         coVerify(exactly = 1) { repo.getPics() }
         confirmVerified(repo)
     }
-
 
     @Test
     internal fun `when gets feeds sends them`() {
@@ -87,7 +96,7 @@ internal class FlickrRepositoryUseCaseTest {
         // WHEN
         useCase.execute(handler)
         // THEN
-        verify(exactly = 1) { logger.w(ofType<String>(), ofType<String>()) }
+        verify(exactly = 1) { logger.w(ofType(), ofType()) }
         confirmVerified(logger)
     }
 }

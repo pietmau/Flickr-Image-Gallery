@@ -1,4 +1,4 @@
-package com.pppp.mvicoreapp.main.view.customview
+package com.pppp.flickrimagegallery.features.main.view.customview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

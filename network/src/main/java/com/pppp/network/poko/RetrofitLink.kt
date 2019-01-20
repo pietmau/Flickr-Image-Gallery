@@ -15,5 +15,4 @@ data class RetrofitLink(
     @field:Attribute(name = "href", required = false)
     override var href: String? = null
 ) : Link
-			
-			
+            

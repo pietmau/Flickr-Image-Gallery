@@ -2,7 +2,12 @@ package com.pppp.flickrimagegallery
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -14,7 +19,12 @@ import com.pppp.flickrimagegallery.setup.DaggerTestAppComponent
 import com.pppp.flickrimagegallery.setup.TestModule
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.slot
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
@@ -29,7 +39,7 @@ class MainActivityEspressoTest {
     private val capturingSlot: CapturingSlot<(Model) -> Unit> = slot()
     private val throwable: Throwable = mockk()
     private val error =
-        Model.Error(throwable)// Mockk unable to mock data class constructor property?
+        Model.Error(throwable) // Mockk unable to mock data class constructor property?
     private val image: FlickrImage = mockk()
     private val complete = Model.Complete(listOf(image))
 
@@ -82,7 +92,7 @@ class MainActivityEspressoTest {
         // WHEN
         pushToUi(error)
         // THEN
-        onView(withText(TEXT)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withText(TEXT)).check(matches(withEffectiveVisibility(VISIBLE)))
     }
 
     @Test
@@ -100,7 +110,6 @@ class MainActivityEspressoTest {
         // THEN
         onView(withId(R.id.progress)).check(matches(not(isDisplayed())))
     }
-
 
     private fun pushToUi(model: Model) {
         activityRule.activity.runOnUiThread {

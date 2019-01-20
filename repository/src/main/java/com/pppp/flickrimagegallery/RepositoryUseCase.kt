@@ -9,14 +9,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class RepositoryUseCase(
     private val flickrRepository: FlickrRepository,
     private val logger: Logger,
     override val coroutineContext: CoroutineDispatcher = Main,
-    val backgroundContext: CoroutineDispatcher = IO
+    private val backgroundContext: CoroutineDispatcher = IO
 ) : UseCase, CoroutineScope {
 
     private val TAG: String? = RepositoryUseCase::class.simpleName
@@ -25,7 +25,7 @@ internal class RepositoryUseCase(
         launch {
             try {
                 val response: List<FlickrImage> =
-                    async(backgroundContext) { flickrRepository.getPics() }.await()
+                    withContext(backgroundContext) { flickrRepository.getPics() }
                 handler(Event.LoadComplete(response))
             } catch (exception: Exception) {
                 logger.w(TAG, exception.localizedMessage)

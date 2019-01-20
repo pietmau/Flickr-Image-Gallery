@@ -25,7 +25,6 @@ object RepositoryModule {
     fun provideUseCase(repo: FlickrRepository): UseCase =
         RepositoryUseCase(repo, AndroidLogger())
 
-
     @Provides
     @JvmStatic
     internal fun repo(client: Client, db: FlickrDataBase): FlickrRepository =

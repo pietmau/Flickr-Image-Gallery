@@ -3,7 +3,15 @@ package com.pppp.uscases.usecases
 import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.spotify.mobius.functions.Consumer
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.clearMocks
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -32,8 +40,8 @@ internal class UseCasesImplTest {
         val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
         // WHEN
         uscases.accept(Effect.GetAllImages, consumer)
-        //THEN
-        verify(exactly = 1) { useCase.execute(any<(Event) -> Unit>()) }
+        // THEN
+        verify(exactly = 1) { useCase.execute(any()) }
         confirmVerified(useCase)
     }
 
@@ -43,9 +51,8 @@ internal class UseCasesImplTest {
         val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
         // WHEN
         uscases.accept(Effect.GetAllImages, consumer)
-        //THEN
+        // THEN
         verify(exactly = 1) { consumer.accept(event) }
         confirmVerified(consumer)
     }
-
 }

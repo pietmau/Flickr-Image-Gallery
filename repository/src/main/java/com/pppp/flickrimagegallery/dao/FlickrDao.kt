@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
 
-
 @Dao
 internal abstract class FlickrDao {
 

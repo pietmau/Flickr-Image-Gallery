@@ -3,7 +3,11 @@ package com.pppp.flickrimagegallery.pokos
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.pppp.entites.*
+import com.pppp.entites.Author
+import com.pppp.entites.Category
+import com.pppp.entites.Content
+import com.pppp.entites.FlickrImage
+import com.pppp.entites.Link
 
 // For simplicity mapping only id, title image url and time stamp
 @Entity

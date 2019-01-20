@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.pppp.mvicoreapp.main.view.customview.FlickrRecyclerView
+    <com.pppp.flickrimagegallery.features.main.view.customview.FlickrRecyclerView
         android:id="@+id/recyler"
         android:layout_width="match_parent"
         android:layout_height="0dp"

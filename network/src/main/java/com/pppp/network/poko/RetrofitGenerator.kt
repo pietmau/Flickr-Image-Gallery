@@ -7,5 +7,4 @@ data class RetrofitGenerator(
 
     override var uri: String? = null
 ) : Generator
-			
-			
+            

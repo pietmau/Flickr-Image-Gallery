@@ -37,5 +37,4 @@ data class RetrofitFeed(
     @field: Attribute(required = false)
     override var xmlns: String? = null
 ) : Feed
-			
-			
+            

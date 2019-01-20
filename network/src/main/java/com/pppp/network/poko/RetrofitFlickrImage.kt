@@ -30,8 +30,7 @@ data class RetrofitFlickrImage(
     override val imageUrl by lazy { link?.find { it.type?.equals(TYPE, true) == true }?.href }
 
     companion object {
-        private val TYPE = "image/jpeg"
+        private const val TYPE = "image/jpeg"
     }
 }
-			
-			
+            

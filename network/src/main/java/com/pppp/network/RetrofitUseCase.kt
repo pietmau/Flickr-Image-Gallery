@@ -1,6 +1,5 @@
 package com.pppp.network
 
-
 import com.pppp.entites.Feed
 import com.pppp.network.api.Client
 import com.pppp.network.utils.Logger
@@ -22,7 +21,7 @@ class RetrofitUseCase(
         launch {
             try {
                 val response: Feed = client.getPics().await()
-                val results = response.entry ?: emptyList()//TODO use interceptor instead
+                val results = response.entry ?: emptyList() // TODO use interceptor instead
                 handler(Event.LoadComplete(results))
             } catch (exception: Exception) {
                 logger.w(TAG, exception.localizedMessage)

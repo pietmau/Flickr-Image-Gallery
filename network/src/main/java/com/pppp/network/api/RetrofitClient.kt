@@ -8,7 +8,6 @@ import org.simpleframework.xml.core.Persister
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
-
 class RetrofitClient(BASE_URL: String = "https://api.flickr.com/") : Client {
     private val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
     private val client: OkHttpClient = OkHttpClient.Builder().addNetworkInterceptor(interceptor).build()

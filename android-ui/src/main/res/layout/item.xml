@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.pppp.mvicoreapp.main.view.customview.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pppp.flickrimagegallery.features.main.view.customview.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <com.pppp.mvicoreapp.main.view.customview.SquareImageView
+    <com.pppp.flickrimagegallery.features.main.view.customview.SquareImageView
         android:id="@+id/image"
         android:transitionName="@string/image_transition"
         android:layout_width="match_parent"
@@ -22,4 +22,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</com.pppp.mvicoreapp.main.view.customview.SquareLayout>
+</com.pppp.flickrimagegallery.features.main.view.customview.SquareLayout>

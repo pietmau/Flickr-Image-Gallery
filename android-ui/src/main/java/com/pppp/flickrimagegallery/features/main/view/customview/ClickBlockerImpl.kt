@@ -1,10 +1,10 @@
-package com.pppp.mvicoreapp.main.view.customview
+package com.pppp.flickrimagegallery.features.main.view.customview
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Inject
 
-//TODO Remove
+// TODO Remove
 class ClickBlockerImpl @Inject constructor() : ClickBlocker {
     private var time = System.currentTimeMillis()
 

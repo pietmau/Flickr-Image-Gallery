@@ -7,7 +7,7 @@ import com.spotify.mobius.functions.Consumer
 class UseCasesImpl(private val useCases: Map<Class<out Effect>, UseCase>) : UseCases {
 
     override fun accept(effect: Effect, consumer: Consumer<Event>) {
-        useCases.get(effect::class.java)?.execute { event ->
+        useCases[effect::class.java]?.execute { event ->
             consumer.accept(event)
         }
     }

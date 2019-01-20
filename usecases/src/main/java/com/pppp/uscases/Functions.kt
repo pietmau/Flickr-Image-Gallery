@@ -18,4 +18,3 @@ fun init(model: Model): First<Model, Effect> =
         Model.Starting -> First.first(Model.Loading, mutableSetOf<Effect>(Effect.GetAllImages))
         else -> First.first(model)
     }
-

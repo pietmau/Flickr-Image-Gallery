@@ -39,6 +39,4 @@ internal class MobiusController<M, E>(private val mobius: MobiusLoop.Controller<
     override fun accept(event: E) {
         consumer?.accept(event)
     }
-
 }
-

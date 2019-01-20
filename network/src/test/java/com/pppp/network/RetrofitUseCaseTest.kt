@@ -5,9 +5,15 @@ import com.pppp.entites.FlickrImage
 import com.pppp.network.api.Client
 import com.pppp.network.utils.AndroidLogger
 import com.pppp.uscases.Event
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.Runs
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.just
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.async
@@ -47,16 +53,16 @@ internal class RetrofitUseCaseTest : CoroutineScope {
 
     @Test
     internal fun `when successful return calls bacl`() {
-        //WHEN
+        // WHEN
         useCase.execute(handler)
         // THEN
-        verify { handler.invoke(any<Event>()) }
+        verify { handler.invoke(any()) }
         confirmVerified(handler)
     }
 
     @Test
     internal fun `when successful return result`() {
-        //WHEN
+        // WHEN
         useCase.execute(handler)
         // THEN
         val captured = slot.captured as Event.LoadComplete
@@ -68,7 +74,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     internal fun `when exception then returns error`() {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
-        //WHEN
+        // WHEN
         useCase.execute(handler)
         // THEN
         val captured = slot.captured as Event.Error
@@ -79,7 +85,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     internal fun `when exception then logs`() {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
-        //WHEN
+        // WHEN
         useCase.execute(handler)
         // THEN
         val captured = slot.captured as Event.Error

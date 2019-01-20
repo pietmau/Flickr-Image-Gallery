@@ -8,8 +8,8 @@ import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
-import com.pppp.mvicoreapp.main.view.customview.ClickBlocker
-import com.pppp.mvicoreapp.main.view.customview.ImageLoader
+import com.pppp.flickrimagegallery.features.main.view.customview.ClickBlocker
+import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
 import dagger.android.AndroidInjection
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var controller: Controller<Model, Event>
     @Inject
-    lateinit var clickBlocker: ClickBlocker//TODO remove
+    lateinit var clickBlocker: ClickBlocker // TODO remove
     @Inject
     lateinit var imageLoader: ImageLoader
 
@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
-        recyler.clickBlocker = clickBlocker//TODO
+        recyler.clickBlocker = clickBlocker // TODO
         recyler.loader = imageLoader
         recyler.onItemClick = { item, position -> }
-        controller.connect(accept = ::render);
+        controller.connect(accept = ::render)
     }
 
     private fun render(model: Model) {
@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onLoading() {
-
     }
 
     private fun onComplete(result: List<FlickrImage>) {
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        controller.stop();
+        controller.stop()
     }
 
     public override fun onResume() {
@@ -68,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        controller.disconnect();
+        controller.disconnect()
     }
 }
-

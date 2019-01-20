@@ -7,4 +7,4 @@ data class RetrofitCategory(
 
     override var term: String? = null
 ) : Category
-			
+            

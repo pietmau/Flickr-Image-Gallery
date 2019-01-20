@@ -87,5 +87,4 @@ internal class FunctionsTest {
             assertEquals(Effect.GetAllImages, effect)
         }
     }
-
 }
