@@ -3,6 +3,7 @@ package com.pppp.flickrimagegallery.application
 import android.app.Activity
 import android.app.Application
 import com.pppp.flickrimagegallery.application.di.AppComponent
+import com.pppp.flickrimagegallery.application.di.AppModule
 import com.pppp.flickrimagegallery.application.di.DaggerAppComponentImpl
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
@@ -22,7 +23,7 @@ class App : Application(), HasActivityInjector {
             return
         }
         LeakCanary.install(this)
-        val appComponent = DaggerAppComponentImpl.create()
+        val appComponent = DaggerAppComponentImpl.builder().appModule(AppModule(this)).build()
         appComponent.inject(this)
     }
 

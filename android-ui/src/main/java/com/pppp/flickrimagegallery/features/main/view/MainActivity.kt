@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var controller: Controller<Model, Event>
     @Inject
-    lateinit var clickBlocker: ClickBlocker
+    lateinit var clickBlocker: ClickBlocker//TODO remove
     @Inject
     lateinit var imageLoader: ImageLoader
 

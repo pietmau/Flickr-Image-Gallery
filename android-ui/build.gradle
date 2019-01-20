@@ -29,47 +29,41 @@ android {
 dependencies {
     def lifecycle_version = "2.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-
     // Mobius
     implementation 'com.spotify.mobius:mobius-core:1.2.0'
     testImplementation 'com.spotify.mobius:mobius-test:1.2.0'
-    implementation 'com.spotify.mobius:mobius-android:1.2.0'  // only for Android support
-    implementation 'com.spotify.mobius:mobius-extras:1.2.0'   // utilities for common patterns
-
+    implementation 'com.spotify.mobius:mobius-android:1.2.0'
+    // only for Android support
+    implementation 'com.spotify.mobius:mobius-extras:1.2.0'
+    // utilities for common patterns
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
-
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.1'
     implementation 'com.google.android.material:material:1.0.0'
-
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation "androidx.test.ext:junit:1.0.0"
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
-
-    implementation project(path: ':uscases')
+    implementation project(path: ':usecases')
     implementation project(path: ':network')
-
-    androidTestImplementation "io.mockk:mockk:1.9"
-    androidTestImplementation "io.mockk:mockk-android:1.9"
-    androidTestImplementation "org.slf4j:slf4j-nop:1.6.1"
-    androidTestImplementation("org.assertj:assertj-core:3.11.1")
+    androidTestImplementation 'io.mockk:mockk:1.9'
+    androidTestImplementation 'io.mockk:mockk-android:1.9'
+    androidTestImplementation 'org.slf4j:slf4j-nop:1.6.1'
+    androidTestImplementation 'org.assertj:assertj-core:3.11.1'
+    implementation project(':repository')
 }

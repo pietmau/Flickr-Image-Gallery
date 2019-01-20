@@ -20,7 +20,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
 
-@Module(includes = [UseCasesModule::class])
+@Module
 object MainModule {
 
     @JvmStatic

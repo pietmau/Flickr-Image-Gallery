@@ -6,7 +6,7 @@ import org.simpleframework.xml.ElementList
 
 data class RetrofitFlickrImage(
     @field:Element(name = "id")
-    override var id: String? = null,
+    override var id: String = "",
 
     override var content: RetrofitContent? = null,
 
