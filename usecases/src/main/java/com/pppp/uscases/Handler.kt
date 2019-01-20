@@ -9,11 +9,7 @@ class Handler(
     private val usecases: UseCases
 ) : Connection<Effect> {
 
-    override fun accept(effect: Effect) {
-        when (effect) {
-            is Effect.GetAllImages -> usecases.accept(effect, consumer)
-        }
-    }
+    override fun accept(effect: Effect) = usecases.accept(effect, consumer)
 
     override fun dispose() {
         /* NoOp */

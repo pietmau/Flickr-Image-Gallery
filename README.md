@@ -1,46 +1,43 @@
-
-# This application is clearly over engineered :-)
-Becuase its only an experiment.
+# This app is definitely over engineered :-)
+Please, bear with me, it's only a demo.
 
 # MVI
-Contains a basic implementation of the MVI pattern based on
-[Spotify's Mobius](https://github.com/spotify/mobius).
+The app runs on a very basic implementation of the MVI pattern based on
+[Spotify's Mobius](https://github.com/spotify/mobius/wiki/Concepts#mobius-loop).
 
 The implementation can be found in the [usecase](./usecases/) module.
 
 The view is effectively decoupled from Mobius or any framework:
-
-all the view cares about
-are [Models](./usecases/src/main/java/com/pppp/usecases/Model.kt) (that it receives and renders on screen)
-and [Effects](./usecases/src/main/java/com/pppp/usecases/Effect.kt) (that it emits when the user interacts).
-
-`Model`, `Event`, `Effect` are super simple immutable data classes.
+all the view cares about are `Models` (that receives and renders on screen)
+and `Effects` (that emits when the user interacts).
+__Model__, __Event__, __Effect__ are super simple immutable data classes.
 
 The view is completely stateless.
 
-## The state
-The state is stored in the `Controller`, retained in a `ViewModel`.
+As a consequence Espresso tests are very simple and effective.
 
-The Controller re-emits the latest `Model` when connects.
+## The state
+Models, Events, Effects are processed by pure functons.
+
+The state is stored in the `Controller`, retained in a `ViewModel`, the Controller re-emits the latest `Model` when connects.
 
 Long running operations happen in the `UseCase` (specifically in the
-[`RepositoryUseCase`](./repository/src/main/java/com/pppp/flickrimagegallery/RepositoryuseCase.kt)).
+`RepositoryUseCase`).
 
 The `Activity` connects and disconnects in `onResume` and `onPause`,
 not leaking the connection.
 
-
 # Architecture
-A simple clean architecture ([see graph](docs/architecture.md)) of Gradle
+A simple clean architecture ([see dependency graph](docs/architecture.md)) of Gradle
 modules connected via Dagger.
 
-
 # Coroutines
-Coroutines and Kotlin instead of RxJava (see [`RepositoryUseCase`](./repository/src/main/java/com/pppp/flickrimagegallery/RepositoryuseCase.kt)).
+Coroutines and Kotlin instead of RxJava (see `RepositoryUseCase`).
 
 # Libraries
 Mobius, Dagger and:
-* Android X
+* Simple Xml
+* AndroidX
 * LeakCanary
 * Retrofit
 * Architecture Components:
@@ -50,11 +47,17 @@ Mobius, Dagger and:
   * Mockk
   * JUnit 5
   * AssertJ
+  * Espresso
 
-# Coroutines
+# Tests
+* __android-ui__ (Espresso tests)
+* __repository__ (JUnit 5 tests)
+* __network__ (JUnit 5 tests)
+* __usecases__ (JUnit 5 tests)
+* __entities__ (no tests, only interfaces here...)
+
+# TODO
 
 * Emit one event from the UI
 * Remove unused dagger injections...
-
-
 
