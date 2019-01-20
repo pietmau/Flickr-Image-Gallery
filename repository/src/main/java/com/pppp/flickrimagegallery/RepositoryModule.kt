@@ -1,7 +1,13 @@
 package com.pppp.flickrimagegallery
 
+import android.content.Context
+import androidx.room.Room
+import com.pppp.flickrimagegallery.database.FlickrDataBase
+import com.pppp.flickrimagegallery.mapper.MapperImpl
 import com.pppp.flickrimagegallery.repository.FlickrRepository
-import com.pppp.network.utils.Logger
+import com.pppp.flickrimagegallery.repository.FlickrRepositoryImpl
+import com.pppp.network.api.Client
+import com.pppp.network.utils.AndroidLogger
 import com.pppp.uscases.Effect
 import com.pppp.uscases.di.EffectKey
 import com.pppp.uscases.usecases.UseCase
@@ -16,8 +22,17 @@ object RepositoryModule {
     @Provides
     @IntoMap
     @EffectKey(Effect.GetAllImages::class)
-    fun provideUseCase(repo: FlickrRepository, logger: Logger): UseCase =
-        RepositoryUseCase(repo, logger)
+    fun provideUseCase(repo: FlickrRepository): UseCase =
+        RepositoryUseCase(repo, AndroidLogger())
 
 
+    @Provides
+    @JvmStatic
+    internal fun repo(client: Client, db: FlickrDataBase): FlickrRepository =
+        FlickrRepositoryImpl(client, db, MapperImpl(), AndroidLogger())
+
+    @Provides
+    @JvmStatic
+    internal fun db(context: Context): FlickrDataBase =
+        Room.databaseBuilder(context, FlickrDataBase::class.java, "images").build()
 }
