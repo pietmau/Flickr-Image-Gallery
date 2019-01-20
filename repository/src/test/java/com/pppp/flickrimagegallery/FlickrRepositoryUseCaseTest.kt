@@ -3,6 +3,7 @@ package com.pppp.flickrimagegallery
 import com.pppp.entites.Feed
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
+import com.pppp.flickrimagegallery.repository.FlickrRepository
 import com.pppp.network.poko.RetrofitFlickrImage
 import com.pppp.uscases.Event
 import io.mockk.*
@@ -19,7 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 @TestInstance(PER_CLASS)
-internal class RepositoryUseCaseTest {
+internal class FlickrRepositoryUseCaseTest {
     private lateinit var useCase: RepositoryUseCase
     @MockK(relaxed = true)
     private lateinit var handler: (Event) -> Unit
@@ -34,7 +35,7 @@ internal class RepositoryUseCaseTest {
     private var images: List<FlickrImage> = emptyList()
     private val eventcaptor: CapturingSlot<Event.LoadComplete> = slot()
     @MockK
-    private lateinit var repo: Repository
+    private lateinit var repo: FlickrRepository
 
     @BeforeEach
     internal fun setUp() {
