@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.flickrimagegallery.features.main.view.controller.MobiusController
-import com.pppp.flickrimagegallery.features.main.view.customview.ClickBlocker
-import com.pppp.flickrimagegallery.features.main.view.customview.ClickBlockerImpl
 import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
 import com.pppp.flickrimagegallery.features.main.view.customview.PicassoImageLoader
 import com.pppp.uscases.Effect
@@ -29,10 +27,6 @@ object MainModule {
         factory: AndroidViewModelFactory
     ): Controller<Model, Event> =
         ViewModelProviders.of(mainActivity, factory).get(AndroidViewModel::class.java).controller
-
-    @JvmStatic
-    @Provides
-    fun provideClickBllocker(): ClickBlocker = ClickBlockerImpl()
 
     @JvmStatic
     @Provides

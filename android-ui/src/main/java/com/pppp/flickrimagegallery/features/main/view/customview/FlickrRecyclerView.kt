@@ -10,13 +10,14 @@ import com.pppp.flickrimagegallery.R
 import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
 
+private const val MANY_ROWS = 5
+private const val FEW_ROWS = 3
+
 class FlickrRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
-
-    lateinit var clickBlocker: ClickBlocker
 
     var loader: ImageLoader? by observable(null) { _: KProperty<*>, _: ImageLoader?, newValue: ImageLoader? ->
         newValue?.let { adapter = FlickrAdapter(it) }
@@ -43,18 +44,11 @@ class FlickrRecyclerView @JvmOverloads constructor(
     }
 
     private fun onItemClicked(entry: com.pppp.entites.FlickrImage, position: Int) {
-        clickBlocker.executeIfAppropriate(this, position) {
-            onItemClick?.invoke(entry, position)
-        }
+        onItemClick?.invoke(entry, position)
     }
 
     fun getImageViewAtPostiion(position: Int) =
         layoutManager?.findViewByPosition(position)?.findViewById<ImageView>(R.id.image)
-
-    companion object {
-        private const val MANY_ROWS = 5
-        private const val FEW_ROWS = 3
-    }
 }
 
 typealias OnItemClick = (com.pppp.entites.FlickrImage, Int) -> Unit

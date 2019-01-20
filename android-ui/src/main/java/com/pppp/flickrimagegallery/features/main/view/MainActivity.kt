@@ -8,7 +8,6 @@ import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
-import com.pppp.flickrimagegallery.features.main.view.customview.ClickBlocker
 import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
@@ -20,15 +19,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var controller: Controller<Model, Event>
     @Inject
-    lateinit var clickBlocker: ClickBlocker // TODO remove
-    @Inject
     lateinit var imageLoader: ImageLoader
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
-        recyler.clickBlocker = clickBlocker // TODO
         recyler.loader = imageLoader
         recyler.onItemClick = { item, position -> }
         controller.connect(accept = ::render)

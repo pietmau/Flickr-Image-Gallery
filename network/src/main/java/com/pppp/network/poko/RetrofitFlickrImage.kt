@@ -4,6 +4,8 @@ import com.pppp.entites.FlickrImage
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 
+private const val TYPE = "image/jpeg"
+
 data class RetrofitFlickrImage(
     @field:Element(name = "id")
     override var id: String = "",
@@ -28,9 +30,5 @@ data class RetrofitFlickrImage(
     override var displaycategories: String? = null
 ) : FlickrImage {
     override val imageUrl by lazy { link?.find { it.type?.equals(TYPE, true) == true }?.href }
-
-    companion object {
-        private const val TYPE = "image/jpeg"
-    }
 }
             
