@@ -9,4 +9,6 @@ class AppModule(private val context: Context) {
 
     @Provides
     fun bindsContext(): Context = context
+
+
 }

@@ -2,6 +2,7 @@ package com.pppp.flickrimagegallery.application.di
 
 import com.pppp.flickrimagegallery.RepositoryModule
 import com.pppp.flickrimagegallery.application.App
+import com.pppp.flickrimagegallery.features.main.di.DetailActivtyModule
 import com.pppp.flickrimagegallery.features.main.di.MainActivtyModule
 import com.pppp.network.NetworkModule
 import com.pppp.uscases.di.UseCasesModule
@@ -13,7 +14,7 @@ interface AppComponent {
 }
 
 @Component(
-    modules = [AndroidInjectionModule::class, MainActivtyModule::class, NetworkModule::class,
+    modules = [AndroidInjectionModule::class, DetailActivtyModule::class, MainActivtyModule::class, NetworkModule::class,
         RepositoryModule::class, UseCasesModule::class, AppModule::class]
 )
 abstract class AppComponentImpl : AppComponent
