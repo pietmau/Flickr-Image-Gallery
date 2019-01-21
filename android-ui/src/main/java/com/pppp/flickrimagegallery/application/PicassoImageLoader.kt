@@ -1,18 +1,24 @@
-package com.pppp.flickrimagegallery.features.main.view.customview
+package com.pppp.flickrimagegallery.application
 
 import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.RequestCreator
 
 object PicassoImageLoader : ImageLoader {
     private const val DEFAULT_SIZE = 400
 
-    override fun loadImage(view: ImageView, url: String?, success: Success?, failure: Failure?) {
+    override fun loadImage(
+        view: ImageView,
+        url: String?,
+        success: Success?,
+        failure: Failure?,
+        resize: Boolean
+    ) {
         url ?: return
         Picasso.get()
             .load(url)
-            .resize(DEFAULT_SIZE, DEFAULT_SIZE)
-            .centerCrop()
+            .resize(resize, DEFAULT_SIZE)
             .into(view, object : Callback {
                 override fun onSuccess() {
                     success?.invoke()
@@ -27,4 +33,12 @@ object PicassoImageLoader : ImageLoader {
     override fun cancelTask(image: ImageView) {
         Picasso.get().cancelRequest(image)
     }
+
+    fun RequestCreator.resize(shouldResize: Boolean, size: Int): RequestCreator =
+        if (shouldResize) {
+            this.resize(size, size).centerCrop()
+        } else {
+            this
+        }
+
 }

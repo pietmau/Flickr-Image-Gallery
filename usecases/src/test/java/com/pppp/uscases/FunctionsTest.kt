@@ -1,30 +1,57 @@
 package com.pppp.uscases
 
 import com.pppp.entites.FlickrImage
+import io.mockk.clearMocks
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
+import org.junit.jupiter.api.extension.ExtendWith
 
+private const val POSITION = 1
+
+@ExtendWith(MockKExtension::class)
 @TestInstance(PER_CLASS)
 internal class FunctionsTest {
-    private val images: List<FlickrImage> = mockk()
-    private val event: Event.LoadComplete = mockk()
-    private val model: Model = mockk()
+    @MockK
+    private lateinit var images: List<FlickrImage>
+    @MockK
+    private lateinit var event: Event.LoadComplete
+    @MockK
+    private lateinit var model: Model
+    @MockK(relaxed = true)
+    private lateinit var detailSelected: Event.DetailSelected
+    @MockK(relaxed = true)
+    private lateinit var showDetail: Event.ShowDetail
+    @MockK(relaxed = true)
+    private lateinit var navigateToDetailModel: Model.NavigateToDetail
+    @MockK(relaxed = true)
+    private lateinit var detail: Detail
+    @MockK(relaxed = true)
+    private lateinit var warning: Model.Warning
 
     @BeforeEach
     internal fun setUp() {
+        clearMocks(detail)
         every { event.images } returns images
+        every { detailSelected.detail } returns detail
+        every { showDetail.detail } returns detail
+        every { navigateToDetailModel.previousState } returns model
+        every { warning.previousState } returns model
+        every { detail.imageLoaded } returns true
     }
 
     @Nested
-    inner class Update {
+    inner class `update` {
         @Test
         internal fun `when complete then returns model complete`() {
             val model = update(Model.Complete(images), event).modelUnsafe()
@@ -64,10 +91,50 @@ internal class FunctionsTest {
             val model = update(model, event)
             assertFalse(model.hasEffects(), "No effects change")
         }
+
+
+        @Nested
+        inner class `show detail` {
+
+            @Test
+            internal fun `when show details and image loaded then navigate to detail`() {
+                val effect = update(model, detailSelected).effects().first()
+                assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
+            }
+
+            @Test
+            internal fun `when show details and image loaded gets right data`() {
+                val next = update(model, detailSelected)
+                assertEquals(model, next.modelUnsafe())
+                val effect = next.effects().first()
+                assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
+            }
+
+            @Disabled //TODO
+            @Test
+            internal fun `when show details and image not loaded then waring`() {
+                every { detail.imageLoaded } returns false
+                val next = update(model, detailSelected)
+                assertThat(next.modelUnsafe()).isInstanceOf(Model.Warning::class.java)
+            }
+
+            @Test
+            internal fun `when show detail then navigates to detail`() {
+                val model = update(model, showDetail).modelUnsafe()
+                assertThat(model).isInstanceOf(Model.NavigateToDetail::class.java)
+            }
+
+            @Test
+            internal fun `when show detail then gets the right data`() {
+                val model = update(model, showDetail).modelUnsafe() as Model.NavigateToDetail
+                assertEquals(detail, model.detail)
+                assertEquals(this@FunctionsTest.model, model.previousState)
+            }
+        }
     }
 
     @Nested
-    inner class Init {
+    inner class `init` {
 
         @Test
         internal fun `when starting then model is loading`() {
@@ -85,6 +152,18 @@ internal class FunctionsTest {
         internal fun `when starting then effect is get`() {
             val effect = init(Model.Starting).effects().toList().first()
             assertEquals(Effect.GetAllImages, effect)
+        }
+
+        @Test
+        internal fun `when show detail then goes back`() {
+            val actual = init(navigateToDetailModel).model()
+            assertEquals(model, actual)
+        }
+
+        @Test
+        internal fun `when warning applies previous`() {
+            val actual = init(warning).model()
+            assertEquals(model, actual)
         }
     }
 }

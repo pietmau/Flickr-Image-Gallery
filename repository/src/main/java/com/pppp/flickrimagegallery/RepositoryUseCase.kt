@@ -3,6 +3,7 @@ package com.pppp.flickrimagegallery
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.repository.FlickrRepository
 import com.pppp.network.utils.Logger
+import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.pppp.uscases.usecases.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,19 +18,18 @@ internal class RepositoryUseCase(
     private val logger: Logger,
     override val coroutineContext: CoroutineDispatcher = Main,
     private val backgroundContext: CoroutineDispatcher = IO
-) : UseCase, CoroutineScope {
-
+) : UseCase<Effect.GetAllImages>, CoroutineScope {
     private val TAG: String? = RepositoryUseCase::class.simpleName
 
-    override fun execute(handler: (Event) -> Unit) {
+    override fun execute(effect: Effect.GetAllImages, callback: (Event) -> Unit) {
         launch {
             try {
                 val response: List<FlickrImage> =
                     withContext(backgroundContext) { flickrRepository.getPics() }
-                handler(Event.LoadComplete(response))
+                callback(Event.LoadComplete(response))
             } catch (exception: Exception) {
                 logger.w(TAG, exception.localizedMessage)
-                handler(Event.Error(exception))
+                callback(Event.Error(exception))
             }
         }
     }

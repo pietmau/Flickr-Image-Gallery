@@ -1,7 +1,7 @@
 # This app is definitely over engineered :-)
 Please, bear with me, it's only a demo.
 
-# MVI
+# MVI with Mobius
 The app runs on a very basic implementation of the MVI pattern based on
 [Spotify's Mobius](https://github.com/spotify/mobius/wiki/Concepts#mobius-loop).
 
@@ -16,8 +16,14 @@ The view is completely stateless.
 
 As a consequence Espresso tests are very simple and effective.
 
+## Cons
+Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems a bit less
+easy to implement navigation, warnings, transient states of the view.
+Because the view only listens to Models and emits exclusively Events
+(unlike MVICore where a third kind of event, `News`, is used model one-off occurrences).
+
 ## The state
-Models, Events, Effects are processed by pure functons.
+Models, Events, Effects are processed by pure functions.
 
 The state is stored in the `Controller`, retained in a `ViewModel`, the Controller re-emits the latest `Model` when connects.
 

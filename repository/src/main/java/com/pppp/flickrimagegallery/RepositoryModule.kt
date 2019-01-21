@@ -22,8 +22,8 @@ object RepositoryModule {
     @Provides
     @IntoMap
     @EffectKey(Effect.GetAllImages::class)
-    fun provideUseCase(repo: FlickrRepository): UseCase =
-        RepositoryUseCase(repo, AndroidLogger())
+    fun provideUseCase(repo: FlickrRepository): UseCase<Effect> =
+        RepositoryUseCase(repo, AndroidLogger()) as UseCase<Effect>
 
     @Provides
     @JvmStatic

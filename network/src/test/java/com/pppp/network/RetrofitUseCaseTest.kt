@@ -4,6 +4,7 @@ import com.pppp.entites.Feed
 import com.pppp.entites.FlickrImage
 import com.pppp.network.api.Client
 import com.pppp.network.utils.AndroidLogger
+import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import io.mockk.CapturingSlot
 import io.mockk.Runs
@@ -41,6 +42,8 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     @MockK(relaxed = true)
     private lateinit var logger: AndroidLogger
     private val slot: CapturingSlot<Event> = slot()
+    @MockK(relaxed = true)
+    private lateinit var effect: Effect.GetAllImages
 
     @BeforeEach
     internal fun setUp() {
@@ -54,7 +57,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return calls bacl`() {
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         verify { handler.invoke(any()) }
         confirmVerified(handler)
@@ -63,7 +66,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     @Test
     internal fun `when successful return result`() {
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         val captured = slot.captured as Event.LoadComplete
         val images = captured.images
@@ -75,7 +78,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         val captured = slot.captured as Event.Error
         assertEquals(TEXT, captured.throwable.message)
@@ -86,7 +89,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
         // GIVEN
         every { client.getPics() } answers { throw Exception(TEXT) }
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         val captured = slot.captured as Event.Error
         assertEquals(TEXT, captured.throwable.message)

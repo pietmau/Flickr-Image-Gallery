@@ -1,14 +1,18 @@
 package com.pppp.flickrimagegallery.features.main.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.flickrimagegallery.application.ImageLoader
+import com.pppp.flickrimagegallery.features.detail.DetailActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
-import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
+import com.pppp.uscases.Detail
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
 import dagger.android.AndroidInjection
@@ -26,15 +30,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
         recyler.loader = imageLoader
-        recyler.onItemClick = { item, position -> }
+        recyler.onItemClick = { itemClicked ->
+            controller.accept(Event.DetailSelected(itemClicked))
+        }
         controller.connect(accept = ::render)
     }
 
     private fun render(model: Model) {
         when (model) {
-            is Model.Complete -> onComplete(model.result)
+            is Model.Complete -> onLoadComplete(model.result)
             is Model.Starting, is Model.Loading -> onLoading()
             is Model.Error -> onError(model.throwable.localizedMessage)
+            is Model.NavigateToDetail -> showDetail(model.detail)
         }
     }
 
@@ -44,9 +51,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onLoading() {
+        progress.visibility = VISIBLE
     }
 
-    private fun onComplete(result: List<FlickrImage>) {
+    private fun showDetail(detail: Detail) {
+        progress.visibility = GONE
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ID, detail.id)
+        intent.putExtra(DetailActivity.IMAGE_URL, detail.imageUrl)
+        intent.putExtra(DetailActivity.POSITION, detail.position)
+        startActivity(intent)
+    }
+
+    private fun onLoadComplete(result: List<FlickrImage>) {
         progress.visibility = GONE
         recyler.onEntriesAvailable(result)
     }

@@ -9,19 +9,29 @@ import com.pppp.uscases.update
 import com.pppp.uscases.usecases.UseCase
 import com.pppp.uscases.usecases.UseCases
 import com.pppp.uscases.usecases.UseCasesImpl
+import com.pppp.uscases.usecases.showDetail.ShowDetailUseCase
 import com.spotify.mobius.Mobius
 import com.spotify.mobius.MobiusLoop
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
 
 @Module
 class UseCasesModule {
 
     @JvmSuppressWildcards
-    @Provides
-    fun provideUseCases(useCase: Map<Class<out Effect>, UseCase>): UseCases = UseCasesImpl(useCase)
+    @Provides//TODO riguarda
+    fun provideUseCases(useCase: Map<Class<out Effect>, UseCase<Effect>>): UseCases =
+        UseCasesImpl(useCase)
 
     @Provides
     fun loopFactory(usecases: UseCases): MobiusLoop.Builder<Model, Event, Effect> =
         Mobius.loop(::update) { consumer -> Handler(consumer, usecases) }.init(::init)
+
+    @Provides
+    @IntoMap
+    @EffectKey(Effect.ShowDetail::class)
+    fun provideUseCase(): UseCase<Effect> = ShowDetailUseCase as UseCase<Effect>
+
+
 }

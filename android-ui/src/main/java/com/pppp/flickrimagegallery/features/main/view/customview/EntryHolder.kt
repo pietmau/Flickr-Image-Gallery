@@ -2,12 +2,14 @@ package com.pppp.flickrimagegallery.features.main.view.customview
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.pppp.entites.FlickrImage
+import com.pppp.flickrimagegallery.application.ImageLoader
 import kotlinx.android.synthetic.main.item.view.*
 
 class EntryHolder(itemView: View, private val imageLoader: ImageLoader) :
     RecyclerView.ViewHolder(itemView) {
 
-    fun bind(model: com.pppp.entites.FlickrImage, onItemClick: OnItemClick?) {
+    fun bind(model: FlickrImage, onItemClick: OnClick?) {
         imageLoader.loadImage(itemView.image, model.imageUrl, {
             itemView.setOnClickListener {
                 onItemClick?.invoke(model, this.adapterPosition)

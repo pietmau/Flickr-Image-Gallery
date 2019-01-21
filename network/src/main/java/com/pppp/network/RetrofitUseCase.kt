@@ -3,6 +3,7 @@ package com.pppp.network
 import com.pppp.entites.Feed
 import com.pppp.network.api.Client
 import com.pppp.network.utils.Logger
+import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.pppp.uscases.usecases.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,10 +15,10 @@ class RetrofitUseCase(
     private val client: Client,
     private val logger: Logger,
     override val coroutineContext: CoroutineDispatcher = Main
-) : UseCase, CoroutineScope {
+) : UseCase<Effect.GetAllImages>, CoroutineScope {
     private val TAG = RetrofitUseCase::class.simpleName
 
-    override fun execute(handler: (Event) -> Unit) {
+    override fun execute(effect: Effect.GetAllImages, handler: (Event) -> Unit) {
         launch {
             try {
                 val response: Feed = client.getPics().await()
