@@ -7,6 +7,7 @@ fun update(model: Model, event: Event): Next<Model, Effect> =
     when (event) {
         is Event.LoadComplete -> onComplete(event)
         is Event.DetailSelected -> Next.next(model, setOf(Effect.ShowDetail(event.detail)))
+        is Event.ShowDetail -> Next.next(Model.NavigateToDetail(event.detail, model))
         else -> Next.noChange()
     }
 

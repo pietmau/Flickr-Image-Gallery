@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -28,7 +29,9 @@ internal class FunctionsTest {
     @MockK
     private lateinit var model: Model
     @MockK(relaxed = true)
-    private lateinit var showDetailEvent: Event.DetailSelected
+    private lateinit var detailSelected: Event.DetailSelected
+    @MockK(relaxed = true)
+    private lateinit var showDetail: Event.ShowDetail
     @MockK(relaxed = true)
     private lateinit var navigateToDetailModel: Model.NavigateToDetail
     @MockK(relaxed = true)
@@ -40,7 +43,8 @@ internal class FunctionsTest {
     internal fun setUp() {
         clearMocks(detail)
         every { event.images } returns images
-        every { showDetailEvent.detail } returns detail
+        every { detailSelected.detail } returns detail
+        every { showDetail.detail } returns detail
         every { navigateToDetailModel.previousState } returns model
         every { warning.previousState } returns model
         every { detail.imageLoaded } returns true
@@ -88,28 +92,43 @@ internal class FunctionsTest {
             assertFalse(model.hasEffects(), "No effects change")
         }
 
+
         @Nested
         inner class `show detail` {
 
             @Test
             internal fun `when show details and image loaded then navigate to detail`() {
-                val effect = update(model, showDetailEvent).effects().first()
+                val effect = update(model, detailSelected).effects().first()
                 assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
             }
 
             @Test
             internal fun `when show details and image loaded gets right data`() {
-                val next = update(model, showDetailEvent)
+                val next = update(model, detailSelected)
                 assertEquals(model, next.modelUnsafe())
                 val effect = next.effects().first()
                 assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
             }
 
+            @Disabled //TODO
             @Test
             internal fun `when show details and image not loaded then waring`() {
                 every { detail.imageLoaded } returns false
-                val next = update(model, showDetailEvent)
+                val next = update(model, detailSelected)
                 assertThat(next.modelUnsafe()).isInstanceOf(Model.Warning::class.java)
+            }
+
+            @Test
+            internal fun `when show detail then navigates to detail`() {
+                val model = update(model, showDetail).modelUnsafe()
+                assertThat(model).isInstanceOf(Model.NavigateToDetail::class.java)
+            }
+
+            @Test
+            internal fun `when show detail then gets the right data`() {
+                val model = update(model, showDetail).modelUnsafe() as Model.NavigateToDetail
+                assertEquals(detail, model.detail)
+                assertEquals(this@FunctionsTest.model, model.previousState)
             }
         }
     }

@@ -8,7 +8,7 @@ object ShowDetailUseCase : UseCase<Effect.ShowDetail> {
     override fun execute(effect: Effect.ShowDetail, handler: (Event) -> Unit) {
         if (effect.imageLoaded) {
             handler(Event.ShowDetail(effect.detail))
-        } else {
+        } else {//TODO
         }
     }
 }

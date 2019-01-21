@@ -11,6 +11,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.slot
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -37,10 +38,35 @@ internal class ShowDetailUseCaseTest {
     internal fun `when image loaded then show detail`() {
         // GIVEN
         every { effect.imageLoaded } returns true
-        //
+        // WHEN
         ShowDetailUseCase.execute(effect, callback)
+        // THEN
         verify { callback.invoke(capture(captor)) }
         confirmVerified(callback)
         assertThat(captor.captured).isInstanceOf(Event.ShowDetail::class.java)
+    }
+
+    @Test
+    internal fun `when image loaded then sends right data`() {
+        // GIVEN
+        every { effect.imageLoaded } returns true
+        // WHEN
+        ShowDetailUseCase.execute(effect, callback)
+        // THEN
+        verify { callback.invoke(capture(captor)) }
+        confirmVerified(callback)
+        assertThat(captor.captured).isInstanceOf(Event.ShowDetail::class.java)
+    }
+
+    @Test
+    internal fun `when image not loaded then issue warning`() {
+        // GIVEN
+        every { effect.imageLoaded } returns false
+        // WHEN
+        ShowDetailUseCase.execute(effect, callback)
+        // THEN
+        verify { callback.invoke(capture(captor)) }
+        val captured = captor.captured as Event.ShowDetail
+        assertEquals(detail, captured.detail)
     }
 }
