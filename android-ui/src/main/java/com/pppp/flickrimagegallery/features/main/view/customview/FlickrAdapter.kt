@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
 
 internal class FlickrAdapter(private val loader: ImageLoader) :
     RecyclerView.Adapter<EntryHolder>() {
     private val entries: MutableList<com.pppp.entites.FlickrImage> = mutableListOf()
-    var onItemClick: OnItemClick? = null
+    var onClick: OnClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,7 +18,7 @@ internal class FlickrAdapter(private val loader: ImageLoader) :
     }
 
     override fun onBindViewHolder(holder: EntryHolder, position: Int) {
-        holder.bind(entries[position], onItemClick)
+        holder.bind(entries[position], onClick)
     }
 
     override fun getItemCount() = entries.size
@@ -48,3 +49,5 @@ internal class FlickrAdapter(private val loader: ImageLoader) :
             old[oldItemPosition] == new[newItemPosition]
     }
 }
+
+typealias OnClick = (FlickrImage, Int) -> Unit

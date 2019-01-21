@@ -12,6 +12,7 @@ import com.pppp.flickrimagegallery.R
 import com.pppp.flickrimagegallery.features.detail.DetailActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
+import com.pppp.uscases.Detail
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
 import dagger.android.AndroidInjection
@@ -29,15 +30,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
         recyler.loader = imageLoader
-        recyler.onItemClick = { item, position ->
-            controller.accept(Event.DetailClicked(item, position))
+        recyler.onItemClick = { itemClicked ->
+            controller.accept(Event.DetailSelected(itemClicked))
         }
         controller.connect(accept = ::render)
     }
 
     private fun render(model: Model) {
         when (model) {
-            is Model.Complete -> onComplete(model.result)
+            is Model.Complete -> onLoadComplete(model.result)
             is Model.Starting, is Model.Loading -> onLoading()
             is Model.Error -> onError(model.throwable.localizedMessage)
             is Model.NavigateToDetail -> showDetail(model.detail)
@@ -53,12 +54,15 @@ class MainActivity : AppCompatActivity() {
         progress.visibility = VISIBLE
     }
 
-    private fun showDetail(item: Model.NavigateToDetail.Detail) {
+    private fun showDetail(detail: Detail) {
         progress.visibility = GONE
-        startActivity(Intent(this, DetailActivity::class.java))
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ID, detail.id)
+        intent.putExtra(DetailActivity.POSITION, detail.position)
+        startActivity(intent)
     }
 
-    private fun onComplete(result: List<FlickrImage>) {
+    private fun onLoadComplete(result: List<FlickrImage>) {
         progress.visibility = GONE
         recyler.onEntriesAvailable(result)
     }

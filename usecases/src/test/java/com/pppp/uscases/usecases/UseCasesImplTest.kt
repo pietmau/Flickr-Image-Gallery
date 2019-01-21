@@ -8,6 +8,7 @@ import io.mockk.Runs
 import io.mockk.clearMocks
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.mockk
@@ -22,15 +23,18 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(MockKExtension::class)//TODO use it!
 @TestInstance(PER_CLASS)
 internal class UseCasesImplTest {
-    private val useCase: UseCase = mockk()
+    private val useCase: UseCase<Effect> = mockk()
     private val consumer: Consumer<Event> = mockk()
     private var slot: CapturingSlot<(Event) -> Unit> = slot()
-    private val event: Event = mockk()
+    @MockK
+    private lateinit var event: Event
+    @MockK
+    private lateinit var effect: Effect
 
     @BeforeEach
     internal fun setUp() {
         clearMocks(consumer, useCase)
-        every { useCase.execute(capture(slot)) } answers
+        every { useCase.execute(effect, capture(slot)) } answers
                 {
                     slot.captured.invoke(event)
                 }
@@ -44,7 +48,7 @@ internal class UseCasesImplTest {
         // WHEN
         uscases.accept(Effect.GetAllImages, consumer)
         // THEN
-        verify(exactly = 1) { useCase.execute(any()) }
+        verify(exactly = 1) { useCase.execute(any(), any()) }//TODO refine here
         confirmVerified(useCase)
     }
 

@@ -10,4 +10,10 @@ internal class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detail)
     }
+
+    companion object {
+        const val ID = "id"
+        // to be used for shared element transition
+        const val POSITION = "position"
+    }
 }

@@ -4,6 +4,7 @@ import com.pppp.entites.Feed
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.repository.FlickrRepository
 import com.pppp.network.utils.AndroidLogger
+import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import io.mockk.CapturingSlot
 import io.mockk.Runs
@@ -45,6 +46,8 @@ internal class FlickrRepositoryUseCaseTest {
     private lateinit var repo: FlickrRepository
     @MockK(relaxed = true)
     private lateinit var logger: AndroidLogger
+    @MockK(relaxed = true)
+    private lateinit var effect: Effect.GetAllImages
 
     @BeforeEach
     internal fun setUp() {
@@ -53,7 +56,7 @@ internal class FlickrRepositoryUseCaseTest {
         coEvery { repo.getPics() } returns images
         coEvery { deferred.await() } returns feed
         every { feed.entry } returns images
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
     }
 
     @Test
@@ -81,7 +84,7 @@ internal class FlickrRepositoryUseCaseTest {
         val handler: (Event) -> Unit = mockk()
         every { handler.invoke(any()) } just Runs
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         verify(exactly = 1) { handler(ofType(Event.Error::class)) }
         confirmVerified(handler)
@@ -94,7 +97,7 @@ internal class FlickrRepositoryUseCaseTest {
         val handler: (Event) -> Unit = mockk()
         every { handler.invoke(any()) } just Runs
         // WHEN
-        useCase.execute(handler)
+        useCase.execute(effect, handler)
         // THEN
         verify(exactly = 1) { logger.w(ofType(), ofType()) }
         confirmVerified(logger)

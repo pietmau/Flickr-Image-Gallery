@@ -6,7 +6,9 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.uscases.Detail
 import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
 
@@ -27,7 +29,7 @@ class FlickrRecyclerView @JvmOverloads constructor(
         get() = adapter as FlickrAdapter
 
     var onItemClick: OnItemClick? by observable(null) { _: KProperty<*>, _: OnItemClick?, _: OnItemClick? ->
-        flickrAdapter.onItemClick = { entry, position ->
+        flickrAdapter.onClick = { entry, position ->
             onItemClicked(entry, position)
         }
     }
@@ -43,12 +45,25 @@ class FlickrRecyclerView @JvmOverloads constructor(
         flickrAdapter.setItems(results)
     }
 
-    private fun onItemClicked(entry: com.pppp.entites.FlickrImage, position: Int) {
-        onItemClick?.invoke(entry, position)
+    private fun onItemClicked(entry: FlickrImage, position: Int) {
+        val imageLoaded = getImageViewAtPostiion(position)?.drawable != null
+        val item = RecyclerItem(entry, position, imageLoaded)
+        onItemClick?.invoke(item)
     }
 
     fun getImageViewAtPostiion(position: Int) =
         layoutManager?.findViewByPosition(position)?.findViewById<ImageView>(R.id.image)
+
+    private data class RecyclerItem(
+        override val image: FlickrImage,
+        override val position: Int,
+        override val imageLoaded: Boolean
+    ) : Detail {
+        override val id = image.id
+    }
 }
 
-typealias OnItemClick = (com.pppp.entites.FlickrImage, Int) -> Unit
+typealias OnItemClick = (Detail) -> Unit
+
+
+

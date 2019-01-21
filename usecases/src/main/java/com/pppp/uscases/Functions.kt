@@ -6,7 +6,7 @@ import com.spotify.mobius.Next
 fun update(model: Model, event: Event): Next<Model, Effect> =
     when (event) {
         is Event.LoadComplete -> onComplete(event)
-        is Event.DetailClicked -> onShowDetail(event, model)
+        is Event.DetailSelected -> Next.next(model, setOf(Effect.ShowDetail(event.detail)))
         else -> Next.noChange()
     }
 
@@ -14,6 +14,7 @@ fun init(model: Model): First<Model, Effect> =
     when (model) {
         Model.Starting -> First.first(Model.Loading, mutableSetOf<Effect>(Effect.GetAllImages))
         is Model.NavigateToDetail -> First.first(model.previousState)
+        is Model.Warning -> First.first(model.previousState)
         else -> First.first(model)
     }
 
@@ -23,8 +24,4 @@ private fun onComplete(event: Event.LoadComplete): Next<Model, Effect> {
     return Next.next(complete, effects)
 }
 
-fun onShowDetail(event: Event.DetailClicked, lastModel: Model): Next<Model, Effect> {
-    val detail = Model.NavigateToDetail.Detail(event.item, event.position)
-    val model = Model.NavigateToDetail(detail = detail, previousState = lastModel)
-    return Next.next(model)
-}
+
