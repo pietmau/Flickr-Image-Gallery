@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.flickrimagegallery.application.ImageLoader
 import com.pppp.uscases.Detail
 import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
@@ -59,6 +60,7 @@ class FlickrRecyclerView @JvmOverloads constructor(
         override val position: Int,
         override val imageLoaded: Boolean
     ) : Detail {
+        override val imageUrl: String = image.imageUrl ?: ""
         override val id = image.id
     }
 }

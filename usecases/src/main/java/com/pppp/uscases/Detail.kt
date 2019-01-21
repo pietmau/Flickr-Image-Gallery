@@ -7,4 +7,5 @@ interface Detail {
     val position: Int
     val imageLoaded: Boolean
     val id: String
+    val imageUrl: String
 }

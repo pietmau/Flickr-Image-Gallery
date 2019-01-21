@@ -15,7 +15,7 @@ internal const val MAX_PICS = 50
 internal class FlickrRepositoryImpl(
     private val client: Client,
     private val database: FlickrDataBase,
-    private val mapper: Mapper<RetrofitFlickrImage, RoomFlickrImage>,
+    private val mapper: Mapper<FlickrImage, RoomFlickrImage>,
     private val logger: Logger
 ) : FlickrRepository {
 

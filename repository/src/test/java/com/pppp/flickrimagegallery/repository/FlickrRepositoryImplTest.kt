@@ -1,6 +1,7 @@
 package com.pppp.flickrimagegallery.repository
 
 import com.pppp.entites.Feed
+import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.TEXT
 import com.pppp.flickrimagegallery.database.FlickrDataBase
 import com.pppp.flickrimagegallery.database.getLatestImages
@@ -37,7 +38,7 @@ internal class FlickrRepositoryImplTest {
     @MockK(relaxed = true)
     private lateinit var feed: Feed
     @MockK
-    private lateinit var mapper: Mapper<RetrofitFlickrImage, RoomFlickrImage>
+    private lateinit var mapper: Mapper<FlickrImage, RoomFlickrImage>
     @MockK
     private lateinit var retrofitFlickrImage: RetrofitFlickrImage
     @MockK

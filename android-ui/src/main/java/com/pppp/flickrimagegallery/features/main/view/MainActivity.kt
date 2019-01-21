@@ -9,9 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.flickrimagegallery.application.ImageLoader
 import com.pppp.flickrimagegallery.features.detail.DetailActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
-import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
 import com.pppp.uscases.Detail
 import com.pppp.uscases.Event
 import com.pppp.uscases.Model
@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         progress.visibility = GONE
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.ID, detail.id)
+        intent.putExtra(DetailActivity.IMAGE_URL, detail.imageUrl)
         intent.putExtra(DetailActivity.POSITION, detail.position)
         startActivity(intent)
     }
