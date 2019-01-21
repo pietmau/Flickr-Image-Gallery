@@ -1,12 +1,15 @@
 package com.pppp.flickrimagegallery.features.main.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
+import com.pppp.flickrimagegallery.features.detail.DetailActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.flickrimagegallery.features.main.view.customview.ImageLoader
 import com.pppp.uscases.Event
@@ -26,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
         recyler.loader = imageLoader
-        recyler.onItemClick = { item, position -> }
+        recyler.onItemClick = { item, position ->
+            controller.accept(Event.DetailClicked(item, position))
+        }
         controller.connect(accept = ::render)
     }
 
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             is Model.Complete -> onComplete(model.result)
             is Model.Starting, is Model.Loading -> onLoading()
             is Model.Error -> onError(model.throwable.localizedMessage)
+            is Model.NavigateToDetail -> showDetail(model.detail)
         }
     }
 
@@ -44,6 +50,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onLoading() {
+        progress.visibility = VISIBLE
+    }
+
+    private fun showDetail(item: Model.NavigateToDetail.Detail) {
+        progress.visibility = GONE
+        startActivity(Intent(this, DetailActivity::class.java))
     }
 
     private fun onComplete(result: List<FlickrImage>) {

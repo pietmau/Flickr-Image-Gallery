@@ -2,6 +2,8 @@ package com.pppp.uscases
 
 import com.pppp.entites.FlickrImage
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,16 +13,32 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
+import org.junit.jupiter.api.extension.ExtendWith
 
+private const val POSITION = 1
+
+@ExtendWith(MockKExtension::class)
 @TestInstance(PER_CLASS)
 internal class FunctionsTest {
-    private val images: List<FlickrImage> = mockk()
-    private val event: Event.LoadComplete = mockk()
-    private val model: Model = mockk()
+    @MockK
+    private lateinit var images: List<FlickrImage>
+    @MockK
+    private lateinit var event: Event.LoadComplete
+    @MockK
+    private lateinit var model: Model
+    @MockK(relaxed = true)
+    private lateinit var showDetailEvent: Event.DetailClicked
+    @MockK(relaxed = true)
+    private lateinit var navigateToDetailModel: Model.NavigateToDetail
+    @MockK
+    private lateinit var image: FlickrImage
 
     @BeforeEach
     internal fun setUp() {
         every { event.images } returns images
+        every { showDetailEvent.item } returns image
+        every { showDetailEvent.position } returns POSITION
+        every { navigateToDetailModel.previousState } returns model
     }
 
     @Nested
@@ -64,6 +82,21 @@ internal class FunctionsTest {
             val model = update(model, event)
             assertFalse(model.hasEffects(), "No effects change")
         }
+
+        @Test
+        internal fun `when show details then navigate to detail`() {
+            val next = update(model, showDetailEvent)
+            assertThat(next.modelUnsafe()).isInstanceOf(Model.NavigateToDetail::class.java)
+        }
+
+        @Test
+        internal fun `when show details gets right data`() {
+            val next = update(model, showDetailEvent)
+            val result = next.modelUnsafe() as Model.NavigateToDetail
+            assertEquals(image, result.detail.item)
+            assertEquals(POSITION, result.detail.position)
+            assertEquals(model, result.previousState)
+        }
     }
 
     @Nested
@@ -85,6 +118,12 @@ internal class FunctionsTest {
         internal fun `when starting then effect is get`() {
             val effect = init(Model.Starting).effects().toList().first()
             assertEquals(Effect.GetAllImages, effect)
+        }
+
+        @Test
+        internal fun `when show detail then goes back`() {
+            val actual = init(navigateToDetailModel).model()
+            assertEquals(model, actual)
         }
     }
 }

@@ -8,6 +8,7 @@ import io.mockk.Runs
 import io.mockk.clearMocks
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
@@ -16,7 +17,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MockKExtension::class)//TODO use it!
 @TestInstance(PER_CLASS)
 internal class UseCasesImplTest {
     private val useCase: UseCase = mockk()
