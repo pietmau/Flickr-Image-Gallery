@@ -20,7 +20,7 @@ import dagger.multibindings.IntoMap
 class UseCasesModule {
 
     @JvmSuppressWildcards
-    @Provides//TODO riguarda
+    @Provides
     fun provideUseCases(useCase: Map<Class<out Effect>, UseCase<Effect>>): UseCases =
         UseCasesImpl(useCase)
 

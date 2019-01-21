@@ -27,7 +27,7 @@ android {
     }
 }
 
-dependencies {
+dependencies { //TODO cleanup!!!
     def lifecycle_version = "2.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     // Mobius
@@ -37,6 +37,8 @@ dependencies {
     // only for Android support
     implementation 'com.spotify.mobius:mobius-extras:1.2.0'
     // utilities for common patterns
+    implementation project(':repository')
+
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
@@ -66,5 +68,11 @@ dependencies {
     androidTestImplementation 'io.mockk:mockk-android:1.9'
     androidTestImplementation 'org.slf4j:slf4j-nop:1.6.1'
     androidTestImplementation 'org.assertj:assertj-core:3.11.1'
-    implementation project(':repository')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
+    testImplementation "io.mockk:mockk:1.9.kotlin12"
+    testImplementation "org.slf4j:slf4j-nop:1.6.1"
+    testImplementation("org.assertj:assertj-core:3.11.1")
+
 }
