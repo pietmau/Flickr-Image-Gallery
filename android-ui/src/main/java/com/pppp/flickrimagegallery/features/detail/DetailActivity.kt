@@ -23,6 +23,5 @@ class DetailActivity : AppCompatActivity() {
     companion object {
         //TODO use repository instead
         const val IMAGE_URL = "image_url"
-
     }
 }

@@ -1,5 +1,5 @@
 # This app is definitely over engineered :-)
-Please, bear with me, it's only a demo.
+Its purpose is only illustrative.
 
 # MVI with Mobius
 The app runs on a very basic implementation of the MVI pattern based on
@@ -17,10 +17,10 @@ The view is completely stateless.
 As a consequence Espresso tests are very simple and effective.
 
 ## Cons
-Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems a bit less
-easy to implement navigation, warnings, transient states of the view.
-Because the view only listens to Models and emits exclusively Events
-(unlike MVICore where a third kind of event, `News`, is used model one-off occurrences).
+Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems that is is a bit less
+easy to implement features like navigation and transient messages.
+This is because the view listens to events of exclusively one type, while MVICore where has a second type event, `News`,
+that is used model one-off occurrences.
 
 ## The state
 Models, Events, Effects are processed by pure functions.
@@ -61,9 +61,4 @@ Mobius, Dagger and:
 * __network__ (JUnit 5 tests)
 * __usecases__ (JUnit 5 tests)
 * __entities__ (no tests, only interfaces here...)
-
-# TODO
-
-* Emit one event from the UI
-* Remove unused dagger injections...
 
