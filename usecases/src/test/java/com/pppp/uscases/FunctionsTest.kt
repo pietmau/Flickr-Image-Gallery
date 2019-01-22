@@ -10,7 +10,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -108,14 +107,6 @@ internal class FunctionsTest {
                 assertEquals(model, next.modelUnsafe())
                 val effect = next.effects().first()
                 assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
-            }
-
-            @Disabled //TODO
-            @Test
-            internal fun `when show details and image not loaded then waring`() {
-                every { detail.imageLoaded } returns false
-                val next = update(model, detailSelected)
-                assertThat(next.modelUnsafe()).isInstanceOf(Model.Warning::class.java)
             }
 
             @Test

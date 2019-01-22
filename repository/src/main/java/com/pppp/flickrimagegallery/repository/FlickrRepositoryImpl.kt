@@ -23,7 +23,7 @@ internal class FlickrRepositoryImpl(
 
     override suspend fun getPics(): List<FlickrImage> =
         try {
-            val images = client.getPics().await().entry ?: emptyList<RetrofitFlickrImage>()
+            val images = client.getPics().await().images ?: emptyList<RetrofitFlickrImage>()
             database.insert(images.map { it as RetrofitFlickrImage }.map { mapper.map(it) })
             images
         } catch (exception: Exception) {

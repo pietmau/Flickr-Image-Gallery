@@ -6,5 +6,5 @@ import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
 internal class MapperImpl : Mapper<FlickrImage, RoomFlickrImage> {
 
     override fun map(image: FlickrImage): RoomFlickrImage =
-        RoomFlickrImage(id = image.id, title = image.title, imageUrl = image.imageUrl) // TODO fix
+        RoomFlickrImage(id = image.id, title = image.title, imageUrl = image.imageUrl)
 }

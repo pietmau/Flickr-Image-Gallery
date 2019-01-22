@@ -49,7 +49,7 @@ internal class RetrofitUseCaseTest : CoroutineScope {
     internal fun setUp() {
         useCase = RetrofitUseCase(client, logger, Unconfined)
         every { client.getPics() } returns async { feed }
-        every { feed.entry } returns entries
+        every { feed.images } returns entries
         every { handler.invoke(capture(slot)) } just Runs
         slot.clear()
     }

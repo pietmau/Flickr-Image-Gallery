@@ -13,13 +13,13 @@ import dagger.android.AndroidInjectionModule
 
 interface AppComponent {
     fun inject(app: App)
-
-    @JvmSuppressWildcards
-    fun useCases(): Map<Class<out Effect>, UseCase<Effect>>
 }
 
 @Component(
     modules = [AndroidInjectionModule::class, DetailActivtyModule::class, MainActivtyModule::class, NetworkModule::class,
         RepositoryModule::class, UseCasesModule::class, AppModule::class]
 )
-abstract class AppComponentImpl : AppComponent
+abstract class AppComponentImpl : AppComponent {
+    @JvmSuppressWildcards
+    abstract fun useCases(): Map<Class<out Effect>, UseCase<Effect>>
+}

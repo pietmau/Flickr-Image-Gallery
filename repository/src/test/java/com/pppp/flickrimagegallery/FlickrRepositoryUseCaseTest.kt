@@ -55,7 +55,7 @@ internal class FlickrRepositoryUseCaseTest {
         useCase = RepositoryUseCase(repo, logger, Unconfined)
         coEvery { repo.getPics() } returns images
         coEvery { deferred.await() } returns feed
-        every { feed.entry } returns images
+        every { feed.images } returns images
         useCase.execute(effect, handler)
     }
 

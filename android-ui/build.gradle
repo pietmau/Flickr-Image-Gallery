@@ -27,19 +27,17 @@ android {
     }
 }
 
-dependencies { //TODO cleanup!!!
-    def lifecycle_version = "2.0.0"
+dependencies {
+    implementation project(path: ':usecases')
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-    // Mobius
     implementation 'com.spotify.mobius:mobius-core:1.2.0'
     testImplementation 'com.spotify.mobius:mobius-test:1.2.0'
     implementation 'com.spotify.mobius:mobius-android:1.2.0'
-    // only for Android support
     implementation 'com.spotify.mobius:mobius-extras:1.2.0'
-    // utilities for common patterns
     implementation project(':repository')
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    def lifecycle_version = "2.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
@@ -62,8 +60,6 @@ dependencies { //TODO cleanup!!!
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
-    implementation project(path: ':usecases')
-    implementation project(path: ':network')
     androidTestImplementation 'io.mockk:mockk:1.9'
     androidTestImplementation 'io.mockk:mockk-android:1.9'
     androidTestImplementation 'org.slf4j:slf4j-nop:1.6.1'
@@ -74,5 +70,4 @@ dependencies { //TODO cleanup!!!
     testImplementation "io.mockk:mockk:1.9.kotlin12"
     testImplementation "org.slf4j:slf4j-nop:1.6.1"
     testImplementation("org.assertj:assertj-core:3.11.1")
-
 }

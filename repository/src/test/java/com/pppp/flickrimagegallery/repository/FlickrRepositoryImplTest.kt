@@ -53,7 +53,7 @@ internal class FlickrRepositoryImplTest {
         repo = FlickrRepositoryImpl(client, database, mapper, logger)
         every { client.getPics() } returns deferred
         coEvery { deferred.await() } returns feed
-        every { feed.entry } returns list
+        every { feed.images } returns list
         every { mapper.map(retrofitFlickrImage) } returns roomFlickrImage
         runBlocking { repo.getPics() }
     }

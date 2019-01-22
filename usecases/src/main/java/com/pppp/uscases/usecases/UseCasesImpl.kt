@@ -3,7 +3,7 @@ package com.pppp.uscases.usecases
 import com.pppp.uscases.Effect
 import com.pppp.uscases.Event
 import com.spotify.mobius.functions.Consumer
-//TODO riguarda
+
 class UseCasesImpl(private val useCases: Map<Class<out Effect>, UseCase<Effect>>) : UseCases {
 
     override fun accept(effect: Effect, consumer: Consumer<Event>) {

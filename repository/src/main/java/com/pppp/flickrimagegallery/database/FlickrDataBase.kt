@@ -10,7 +10,7 @@ internal abstract class FlickrDataBase : RoomDatabase() {
     abstract fun dao(): FlickrDao
 }
 
-internal fun FlickrDataBase.insert(images: List<RoomFlickrImage>) { // TODO instroduce new class instead
+internal fun FlickrDataBase.insert(images: List<RoomFlickrImage>) { // TODO introduce a new class instead
     dao().insert(images)
 }
 

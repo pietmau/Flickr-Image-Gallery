@@ -11,7 +11,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.just
-import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -20,11 +19,13 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)//TODO use it!
+@ExtendWith(MockKExtension::class)
 @TestInstance(PER_CLASS)
 internal class UseCasesImplTest {
-    private val useCase: UseCase<Effect> = mockk()
-    private val consumer: Consumer<Event> = mockk()
+    @MockK
+    private lateinit var useCase: UseCase<Effect>
+    @MockK
+    private lateinit var consumer: Consumer<Event>
     private var slot: CapturingSlot<(Event) -> Unit> = slot()
     @MockK
     private lateinit var event: Event
@@ -48,7 +49,11 @@ internal class UseCasesImplTest {
         // WHEN
         uscases.accept(Effect.GetAllImages, consumer)
         // THEN
-        verify(exactly = 1) { useCase.execute(any(), any()) }//TODO refine here
+        verify(exactly = 1) {
+            useCase.execute(
+                ofType(Effect.GetAllImages::class), ofType<(Event) -> Unit>()
+            )
+        }
         confirmVerified(useCase)
     }
 

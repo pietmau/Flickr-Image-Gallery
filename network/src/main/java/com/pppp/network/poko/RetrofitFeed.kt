@@ -26,7 +26,7 @@ data class RetrofitFeed(
 
     @get: ElementList(name = "entry", required = false, inline = true, entry = "entry")
     @set: ElementList(name = "entry", required = false, inline = true, entry = "entry")
-    override var entry: List<RetrofitFlickrImage>? = null,
+    override var images: List<RetrofitFlickrImage>? = null,
 
     @field: Attribute(required = false)
     override var subtitle: String? = null,
