@@ -6,9 +6,9 @@ import com.pppp.flickrimagegallery.database.getLatestImages
 import com.pppp.flickrimagegallery.database.insert
 import com.pppp.flickrimagegallery.mapper.Mapper
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
-import com.pppp.network.api.Client
-import com.pppp.network.poko.RetrofitFlickrImage
-import com.pppp.network.utils.Logger
+import com.pppp.network.client.Client
+import com.pppp.network.client.logger.Logger
+import com.pppp.network.pokos.RetrofitFlickrImage
 
 internal const val MAX_PICS = 50
 

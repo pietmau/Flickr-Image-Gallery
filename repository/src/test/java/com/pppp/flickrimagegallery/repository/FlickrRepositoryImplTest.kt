@@ -8,9 +8,9 @@ import com.pppp.flickrimagegallery.database.getLatestImages
 import com.pppp.flickrimagegallery.database.insert
 import com.pppp.flickrimagegallery.mapper.Mapper
 import com.pppp.flickrimagegallery.pokos.RoomFlickrImage
-import com.pppp.network.api.Client
-import com.pppp.network.poko.RetrofitFlickrImage
-import com.pppp.network.utils.AndroidLogger
+import com.pppp.network.client.Client
+import com.pppp.network.client.logger.AndroidLogger
+import com.pppp.network.pokos.RetrofitFlickrImage
 import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.confirmVerified
@@ -22,11 +22,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class FlickrRepositoryImplTest {
     private lateinit var repo: FlickrRepository
     @MockK

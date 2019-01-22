@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
-import com.pppp.flickrimagegallery.application.ImageLoader
-import com.pppp.uscases.Detail
+import com.pppp.flickrimagegallery.application.imageloader.ImageLoader
+import com.pppp.uscases.main.events.Detail
 import kotlin.properties.Delegates.observable
 import kotlin.reflect.KProperty
 

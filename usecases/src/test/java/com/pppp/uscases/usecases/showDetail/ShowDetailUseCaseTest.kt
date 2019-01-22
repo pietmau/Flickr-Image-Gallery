@@ -1,8 +1,9 @@
 package com.pppp.uscases.usecases.showDetail
 
-import com.pppp.uscases.Detail
-import com.pppp.uscases.Effect
-import com.pppp.uscases.Event
+import com.pppp.uscases.main.ShowDetailUseCase
+import com.pppp.uscases.main.events.Detail
+import com.pppp.uscases.main.events.Effect
+import com.pppp.uscases.main.events.Event
 import io.mockk.CapturingSlot
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -36,8 +37,6 @@ internal class ShowDetailUseCaseTest {
 
     @Test
     internal fun `when image loaded then show detail`() {
-        // GIVEN
-        every { effect.imageLoaded } returns true
         // WHEN
         ShowDetailUseCase.execute(effect, callback)
         // THEN
@@ -48,8 +47,6 @@ internal class ShowDetailUseCaseTest {
 
     @Test
     internal fun `when image loaded then sends right data`() {
-        // GIVEN
-        every { effect.imageLoaded } returns true
         // WHEN
         ShowDetailUseCase.execute(effect, callback)
         // THEN
@@ -60,8 +57,6 @@ internal class ShowDetailUseCaseTest {
 
     @Test
     internal fun `when image not loaded then issue warning`() {
-        // GIVEN
-        every { effect.imageLoaded } returns false
         // WHEN
         ShowDetailUseCase.execute(effect, callback)
         // THEN

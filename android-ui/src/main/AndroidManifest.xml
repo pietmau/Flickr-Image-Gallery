@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".features.detail.DetailActivity" />
+        <activity android:name=".features.detail.view.DetailActivity" />
     </application>
 
 </manifest>

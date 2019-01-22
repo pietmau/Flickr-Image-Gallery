@@ -1,9 +1,9 @@
 package com.pppp.flickrimagegallery
 
 import android.content.Context
-import com.pppp.flickrimagegallery.application.di.AppModule
-import com.pppp.flickrimagegallery.application.di.DaggerAppComponentImpl
-import com.pppp.uscases.Effect
+import com.pppp.flickrimagegallery.di.AppModule
+import com.pppp.flickrimagegallery.di.DaggerAppComponentImpl
+import com.pppp.uscases.main.events.Effect
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions.assertNotNull

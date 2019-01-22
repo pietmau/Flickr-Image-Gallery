@@ -17,15 +17,14 @@ import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.flickrimagegallery.setup.DaggerTestAppComponent
 import com.pppp.flickrimagegallery.setup.TestModule
-import com.pppp.uscases.Event
-import com.pppp.uscases.Model
+import com.pppp.uscases.main.events.Event
+import com.pppp.uscases.main.events.Model
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
-import kotlinx.android.synthetic.main.main.*
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule

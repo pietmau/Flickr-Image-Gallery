@@ -3,7 +3,7 @@ package com.pppp.flickrimagegallery.features.main.view.customview
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.entites.FlickrImage
-import com.pppp.flickrimagegallery.application.ImageLoader
+import com.pppp.flickrimagegallery.application.imageloader.ImageLoader
 import kotlinx.android.synthetic.main.item.view.*
 
 class EntryHolder(itemView: View, private val imageLoader: ImageLoader) :

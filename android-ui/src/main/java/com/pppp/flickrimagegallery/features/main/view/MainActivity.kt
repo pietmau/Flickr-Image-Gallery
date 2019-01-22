@@ -11,12 +11,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
-import com.pppp.flickrimagegallery.application.ImageLoader
-import com.pppp.flickrimagegallery.features.detail.DetailActivity
+import com.pppp.flickrimagegallery.application.imageloader.ImageLoader
+import com.pppp.flickrimagegallery.features.detail.view.DetailActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
-import com.pppp.uscases.Detail
-import com.pppp.uscases.Event
-import com.pppp.uscases.Model
+import com.pppp.uscases.main.events.Detail
+import com.pppp.uscases.main.events.Event
+import com.pppp.uscases.main.events.Model
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main.*
 import javax.inject.Inject

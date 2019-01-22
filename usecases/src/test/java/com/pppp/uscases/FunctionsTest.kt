@@ -1,6 +1,12 @@
 package com.pppp.uscases
 
 import com.pppp.entites.FlickrImage
+import com.pppp.uscases.main.events.Detail
+import com.pppp.uscases.main.events.Effect
+import com.pppp.uscases.main.events.Event
+import com.pppp.uscases.main.events.Model
+import com.pppp.uscases.main.init
+import com.pppp.uscases.main.update
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -46,33 +52,44 @@ internal class FunctionsTest {
         every { showDetail.detail } returns detail
         every { navigateToDetailModel.previousState } returns model
         every { warning.previousState } returns model
-        every { detail.imageLoaded } returns true
     }
 
     @Nested
     inner class `update` {
         @Test
         internal fun `when complete then returns model complete`() {
-            val model = update(Model.Complete(images), event).modelUnsafe()
+            val model = update(
+                Model.Complete(images),
+                event
+            ).modelUnsafe()
             assertThat(model).isInstanceOf(Model.Complete::class.java)
         }
 
         @Test
         internal fun `when complete then model returns results`() {
-            val model = update(Model.Complete(images), event).modelUnsafe() as Model.Complete
+            val model = update(
+                Model.Complete(images),
+                event
+            ).modelUnsafe() as Model.Complete
             assertEquals(images, model.result)
         }
 
         @Test
         internal fun `when complete then effect is got images`() {
-            val effects = update(Model.Complete(images), event).effects()
+            val effects = update(
+                Model.Complete(images),
+                event
+            ).effects()
             val effect = effects.first()
             assertThat(effect).isInstanceOf(Effect.GotImages::class.java)
         }
 
         @Test
         internal fun `when complete then effect contains images`() {
-            val effects = update(Model.Complete(images), event).effects()
+            val effects = update(
+                Model.Complete(images),
+                event
+            ).effects()
             val images = (effects.first() as Effect.GotImages).images
             assertEquals(this@FunctionsTest.images, images)
         }
@@ -117,7 +134,10 @@ internal class FunctionsTest {
 
             @Test
             internal fun `when show detail then gets the right data`() {
-                val model = update(model, showDetail).modelUnsafe() as Model.NavigateToDetail
+                val model = update(
+                    model,
+                    showDetail
+                ).modelUnsafe() as Model.NavigateToDetail
                 assertEquals(detail, model.detail)
                 assertEquals(this@FunctionsTest.model, model.previousState)
             }

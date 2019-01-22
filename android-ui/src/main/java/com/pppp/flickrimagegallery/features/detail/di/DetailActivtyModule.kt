@@ -1,6 +1,6 @@
 package com.pppp.flickrimagegallery.features.main.di
 
-import com.pppp.flickrimagegallery.features.detail.DetailActivity
+import com.pppp.flickrimagegallery.features.detail.view.DetailActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

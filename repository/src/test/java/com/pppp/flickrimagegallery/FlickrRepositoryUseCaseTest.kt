@@ -3,12 +3,11 @@ package com.pppp.flickrimagegallery
 import com.pppp.entites.Feed
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.repository.FlickrRepository
-import com.pppp.network.utils.AndroidLogger
-import com.pppp.uscases.Effect
-import com.pppp.uscases.Event
+import com.pppp.network.client.logger.Logger
+import com.pppp.uscases.main.events.Effect
+import com.pppp.uscases.main.events.Event
 import io.mockk.CapturingSlot
 import io.mockk.Runs
-import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -24,14 +23,11 @@ import kotlinx.coroutines.Dispatchers.Unconfined
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import org.junit.jupiter.api.extension.ExtendWith
 
 const val TEXT = "text"
 
 @ExtendWith(MockKExtension::class)
-@TestInstance(PER_CLASS)
 internal class FlickrRepositoryUseCaseTest {
     private lateinit var useCase: RepositoryUseCase
     @MockK(relaxed = true)
@@ -45,18 +41,15 @@ internal class FlickrRepositoryUseCaseTest {
     @MockK
     private lateinit var repo: FlickrRepository
     @MockK(relaxed = true)
-    private lateinit var logger: AndroidLogger
-    @MockK(relaxed = true)
-    private lateinit var effect: Effect.GetAllImages
+    private lateinit var logger: Logger
 
     @BeforeEach
     internal fun setUp() {
-        clearMocks(handler)
-        useCase = RepositoryUseCase(repo, logger, Unconfined)
+        useCase = RepositoryUseCase(repo, logger, Unconfined, Unconfined)
         coEvery { repo.getPics() } returns images
         coEvery { deferred.await() } returns feed
         every { feed.images } returns images
-        useCase.execute(effect, handler)
+        useCase.execute(Effect.GetAllImages, handler)
     }
 
     @Test
@@ -75,6 +68,7 @@ internal class FlickrRepositoryUseCaseTest {
     internal fun `sends then sends the result`() {
         verify(exactly = 1) { handler(capture(eventcaptor)) }
         assertEquals(images, eventcaptor.captured.images)
+        confirmVerified(handler)
     }
 
     @Test
@@ -84,7 +78,7 @@ internal class FlickrRepositoryUseCaseTest {
         val handler: (Event) -> Unit = mockk()
         every { handler.invoke(any()) } just Runs
         // WHEN
-        useCase.execute(effect, handler)
+        useCase.execute(Effect.GetAllImages, handler)
         // THEN
         verify(exactly = 1) { handler(ofType(Event.Error::class)) }
         confirmVerified(handler)
@@ -97,7 +91,7 @@ internal class FlickrRepositoryUseCaseTest {
         val handler: (Event) -> Unit = mockk()
         every { handler.invoke(any()) } just Runs
         // WHEN
-        useCase.execute(effect, handler)
+        useCase.execute(Effect.GetAllImages, handler)
         // THEN
         verify(exactly = 1) { logger.w(ofType(), ofType()) }
         confirmVerified(logger)

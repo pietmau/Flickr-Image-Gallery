@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pppp.entites.FlickrImage
 import com.pppp.flickrimagegallery.R
-import com.pppp.flickrimagegallery.application.ImageLoader
+import com.pppp.flickrimagegallery.application.imageloader.ImageLoader
 
 internal class FlickrAdapter(private val loader: ImageLoader) :
     RecyclerView.Adapter<EntryHolder>() {

@@ -1,5 +1,6 @@
-# This app is definitely over engineered :-)
-Its purpose is only illustrative.
+# This app is over engineered
+Its purpose is only to illustrate an example of MVI with coroutines
+and clean architecture. The result is a bit verbose.
 
 # MVI with Mobius
 The app runs on a very basic implementation of the MVI pattern based on
@@ -16,11 +17,11 @@ The view is completely stateless.
 
 As a consequence Espresso tests are very simple and effective.
 
-## Cons
-Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems that is is a bit less
+## Remarks
+Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems that is a bit less
 easy to implement features like navigation and transient messages.
-This is because the view listens to events of exclusively one type, while MVICore where has a second type event, `News`,
-that is used model one-off occurrences.
+This is because the view listens to events of exclusively one type, while MVICore where has a second event type, `News`,
+that is used to model one-off occurrences.
 
 ## The state
 Models, Events, Effects are processed by pure functions.
@@ -58,7 +59,7 @@ Mobius, Dagger and:
 # Tests
 * __android-ui__ (Espresso tests)
 * __repository__ (JUnit 5 tests)
-* __network__ (JUnit 5 tests)
+* __network__ (no unit tests, only configuration of Retrofit)
 * __usecases__ (JUnit 5 tests)
 * __entities__ (no tests, only interfaces here...)
 

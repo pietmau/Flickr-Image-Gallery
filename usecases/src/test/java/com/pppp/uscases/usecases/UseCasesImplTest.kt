@@ -1,8 +1,8 @@
 package com.pppp.uscases.usecases
 
-import com.pppp.uscases.Effect
-import com.pppp.uscases.Event
-import com.spotify.mobius.functions.Consumer
+import com.pppp.uscases.UseCase
+import com.pppp.uscases.main.events.Effect
+import com.pppp.uscases.main.events.Event
 import io.mockk.CapturingSlot
 import io.mockk.Runs
 import io.mockk.clearMocks
@@ -22,32 +22,31 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(MockKExtension::class)
 @TestInstance(PER_CLASS)
 internal class UseCasesImplTest {
+    @MockK(relaxed = true)
+    private lateinit var useCase: UseCase<Effect, Event>
     @MockK
-    private lateinit var useCase: UseCase<Effect>
-    @MockK
-    private lateinit var consumer: Consumer<Event>
+    private lateinit var consumer: (Event) -> Unit
     private var slot: CapturingSlot<(Event) -> Unit> = slot()
     @MockK
     private lateinit var event: Event
-    @MockK
-    private lateinit var effect: Effect
 
     @BeforeEach
     internal fun setUp() {
         clearMocks(consumer, useCase)
-        every { useCase.execute(effect, capture(slot)) } answers
+        every { useCase.execute(Effect.GetAllImages, capture(slot)) } answers
                 {
                     slot.captured.invoke(event)
                 }
-        every { consumer.accept(any()) } just Runs
+        every { consumer(any()) } just Runs
     }
 
     @Test
     internal fun `when get images then calls network`() {
         // GIVEN
-        val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
+        val uscases = mapOf(Effect.GetAllImages::class.java to useCase)
+        val usecase = uscases[Effect.GetAllImages::class.java]
         // WHEN
-        uscases.accept(Effect.GetAllImages, consumer)
+        usecase?.execute(Effect.GetAllImages, consumer)
         // THEN
         verify(exactly = 1) {
             useCase.execute(
@@ -60,11 +59,12 @@ internal class UseCasesImplTest {
     @Test
     internal fun `when network returns then event is returned`() {
         // GIVEN
-        val uscases = UseCasesImpl(mapOf(Effect.GetAllImages::class.java to useCase))
+        val uscases = mapOf(Effect.GetAllImages::class.java to useCase)
+        val usecase = uscases[Effect.GetAllImages::class.java]
         // WHEN
-        uscases.accept(Effect.GetAllImages, consumer)
+        usecase?.execute(Effect.GetAllImages, consumer)
         // THEN
-        verify(exactly = 1) { consumer.accept(event) }
+        verify(exactly = 1) { consumer(event) }
         confirmVerified(consumer)
     }
 }

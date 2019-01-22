@@ -1,7 +1,7 @@
 package com.pppp.network
 
-import com.pppp.network.api.Client
-import com.pppp.network.api.RetrofitClient
+import com.pppp.network.client.Client
+import com.pppp.network.client.RetrofitClient
 import dagger.Module
 import dagger.Provides
 
