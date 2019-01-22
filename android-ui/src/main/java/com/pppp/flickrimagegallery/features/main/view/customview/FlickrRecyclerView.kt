@@ -47,8 +47,7 @@ class FlickrRecyclerView @JvmOverloads constructor(
     }
 
     private fun onItemClicked(entry: FlickrImage, position: Int) {
-        val imageLoaded = getImageViewAtPostiion(position)?.drawable != null
-        val item = RecyclerItem(entry, position, imageLoaded)
+        val item = RecyclerItem(entry, position)
         onItemClick?.invoke(item)
     }
 
@@ -57,8 +56,7 @@ class FlickrRecyclerView @JvmOverloads constructor(
 
     private data class RecyclerItem(
         override val image: FlickrImage,
-        override val position: Int,
-        override val imageLoaded: Boolean
+        override val position: Int
     ) : Detail {
         override val imageUrl: String = image.imageUrl ?: ""
         override val id = image.id

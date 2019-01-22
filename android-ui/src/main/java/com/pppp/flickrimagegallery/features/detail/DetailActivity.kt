@@ -11,7 +11,6 @@ import javax.inject.Inject
 class DetailActivity : AppCompatActivity() {
     @Inject
     lateinit var imageLoader: ImageLoader
-    //TODO use repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +21,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val ID = "id"
+        //TODO use repository instead
         const val IMAGE_URL = "image_url"
-        // to be used for shared element transition
-        const val POSITION = "position"
+
     }
 }
