@@ -1,9 +1,11 @@
 package com.pppp.flickrimagegallery.features.main.view
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
@@ -29,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
         AndroidInjection.inject(this)
-        recyler.loader = imageLoader
-        recyler.onItemClick = { itemClicked ->
+        recycler.loader = imageLoader
+        recycler.onItemClick = { itemClicked ->
             controller.accept(Event.DetailSelected(itemClicked))
         }
         controller.connect(accept = ::render)
@@ -56,16 +58,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDetail(detail: Detail) {
         progress.visibility = GONE
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.ID, detail.id)
-        intent.putExtra(DetailActivity.IMAGE_URL, detail.imageUrl)
-        intent.putExtra(DetailActivity.POSITION, detail.position)
-        startActivity(intent)
+        val imageView = recycler.getImageViewAtPostiion(detail.position)
+        if (imageView?.isImageLoaded() == true) {
+            startActivityWithTransition(detail, imageView)
+        } else {
+            startActivityWithoutTransition(detail)
+        }
     }
+
+    private fun startActivityWithTransition(detail: Detail, imageView: ImageView) {
+        val intent = getDetailActivityIntent(detail)
+        val options = ActivityOptions.makeSceneTransitionAnimation(
+            this, imageView, getString(R.string.image_transition)
+        )
+        startActivity(intent, options.toBundle())
+    }
+
+    private fun startActivityWithoutTransition(detail: Detail) {
+        val detailActivityIntent = getDetailActivityIntent(detail)
+        startActivity(detailActivityIntent)
+    }
+
+    private fun getDetailActivityIntent(detail: Detail) =
+        Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.IMAGE_URL, detail.imageUrl)
+        }
 
     private fun onLoadComplete(result: List<FlickrImage>) {
         progress.visibility = GONE
-        recyler.onEntriesAvailable(result)
+        recycler.onEntriesAvailable(result)
     }
 
     override fun onPause() {
@@ -83,3 +104,5 @@ class MainActivity : AppCompatActivity() {
         controller.disconnect()
     }
 }
+
+fun ImageView.isImageLoaded(): Boolean = this.drawable != null
