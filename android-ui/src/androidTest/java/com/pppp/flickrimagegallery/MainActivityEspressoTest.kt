@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
+import kotlinx.android.synthetic.main.main.*
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
@@ -100,7 +101,7 @@ class MainActivityEspressoTest {
         // WHEN
         pushToUi(complete)
         // THEN
-        onView(withId(R.id.recyler)).check(matches(hasDescendant(withText(TEXT))))
+        onView(withId(R.id.recycler)).check(matches(hasDescendant(withText(TEXT))))
     }
 
     @Test

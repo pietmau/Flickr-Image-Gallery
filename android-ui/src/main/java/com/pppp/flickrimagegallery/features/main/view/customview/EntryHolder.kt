@@ -10,12 +10,11 @@ class EntryHolder(itemView: View, private val imageLoader: ImageLoader) :
     RecyclerView.ViewHolder(itemView) {
 
     fun bind(model: FlickrImage, onItemClick: OnClick?) {
-        imageLoader.loadImage(itemView.image, model.imageUrl, {
-            itemView.setOnClickListener {
-                onItemClick?.invoke(model, this.adapterPosition)
-            }
-        })
+        imageLoader.loadImage(itemView.image, model.imageUrl)
         itemView.item_title.text = model.title
+        itemView.setOnClickListener {
+            onItemClick?.invoke(model, this.adapterPosition)
+        }
     }
 
     fun unbind() {
