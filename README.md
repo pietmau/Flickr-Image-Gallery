@@ -1,5 +1,5 @@
 # Flickr Image Gallery
-The puropse of this repo is to experiment with MVI and coroutines in a clean architecture. As a consequence it is a bit verbose.
+The puropse of this repo is to experiment with MVI and Coroutines in a clean architecture. As a consequence it is a bit verbose.
 
 # MVI with Mobius
 The app runs on a very basic implementation of the MVI pattern based on
@@ -34,14 +34,14 @@ Long running operations happen in the `UseCase` (specifically in the
 `RepositoryUseCase`).
 
 The `Activity` connects and disconnects in `onResume` and `onPause`,
-not leaking the connection.
+and so does not leak the connection.
 
 # Architecture
 A simple clean architecture ([see dependency graph](docs/architecture.md)) of Gradle
 modules connected via Dagger.
 
 # Coroutines
-Coroutines and Kotlin instead of RxJava (see `RepositoryUseCase`).
+Coroutines and Kotlin **instead of RxJava** (see `RepositoryUseCase`).
 
 # Libraries
 Mobius, Dagger and:

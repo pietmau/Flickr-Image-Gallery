@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var controller: Controller<Model, Event>
     @Inject
     lateinit var imageLoader: ImageLoader
+    @Inject
+    lateinit var bouncer: Bouncer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         recycler.loader = imageLoader
         recycler.onItemClick = { itemClicked ->
-            controller.accept(Event.DetailSelected(itemClicked))
+            bouncer.runOrBounce { controller.accept(Event.DetailSelected(itemClicked)) }
         }
         controller.connect(accept = ::render)
     }

@@ -33,6 +33,8 @@ internal class FunctionsTest {
     private lateinit var event: Event.LoadComplete
     @MockK
     private lateinit var model: Model
+    @MockK
+    private lateinit var modelComplete: Model.Complete
     @MockK(relaxed = true)
     private lateinit var detailSelected: Event.DetailSelected
     @MockK(relaxed = true)
@@ -114,14 +116,14 @@ internal class FunctionsTest {
 
             @Test
             internal fun `when show details and image loaded then navigate to detail`() {
-                val effect = update(model, detailSelected).effects().first()
+                val effect = update(modelComplete, detailSelected).effects().first()
                 assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
             }
 
             @Test
             internal fun `when show details and image loaded gets right data`() {
-                val next = update(model, detailSelected)
-                assertEquals(model, next.modelUnsafe())
+                val next = update(modelComplete, detailSelected)
+                assertEquals(modelComplete, next.modelUnsafe())
                 val effect = next.effects().first()
                 assertThat(effect).isInstanceOf(Effect.ShowDetail::class.java)
             }

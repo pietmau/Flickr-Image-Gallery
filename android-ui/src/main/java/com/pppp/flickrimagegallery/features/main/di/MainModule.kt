@@ -3,6 +3,8 @@ package com.pppp.flickrimagegallery.features.main.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.pppp.flickrimagegallery.features.main.view.Bouncer
+import com.pppp.flickrimagegallery.features.main.view.BouncerImpl
 import com.pppp.flickrimagegallery.features.main.view.MainActivity
 import com.pppp.flickrimagegallery.features.main.view.controller.Controller
 import com.pppp.flickrimagegallery.features.main.view.controller.MobiusController
@@ -25,6 +27,12 @@ object MainModule {
         factory: AndroidViewModelFactory
     ): Controller<Model, Event> =
         ViewModelProviders.of(mainActivity, factory).get(AndroidViewModel::class.java).controller
+
+
+    @JvmStatic
+    @Provides
+    fun provideBouncer():Bouncer = BouncerImpl()
+
 
     data class AndroidViewModel(val controller: Controller<Model, Event>) : ViewModel()
 
