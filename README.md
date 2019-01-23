@@ -1,16 +1,18 @@
-# This app is over engineered
-Its purpose is only to illustrate an example of MVI with coroutines
-and clean architecture. The result is a bit verbose.
+# Flickr Image Gallery
+The puropse of this repo is to experiment with MVI and coroutines in a clean architecture. As a consequence it is a bit verbose.
 
 # MVI with Mobius
 The app runs on a very basic implementation of the MVI pattern based on
-[Spotify's Mobius](https://github.com/spotify/mobius/wiki/Concepts#mobius-loop).
+[Spotify's Mobius](https://github.com/spotify/mobius/wiki/Concepts#mobius-loop)
+(there are some very similar frameworks,
+like [Badoo's](https://github.com/badoo/MVICore), [Spotify's](https://github.com/airbnb/MvRx),
+[RxRedux](https://github.com/freeletics/RxRedux), etc.).
 
 The implementation can be found in the [usecase](./usecases/) module.
 
 The view is effectively decoupled from Mobius or any framework:
 all the view cares about are `Models` (that receives and renders on screen)
-and `Effects` (that emits when the user interacts).
+and `Events` (that emits when the user interacts).
 __Model__, __Event__, __Effect__ are super simple immutable data classes.
 
 The view is completely stateless.
@@ -20,7 +22,7 @@ As a consequence Espresso tests are very simple and effective.
 ## Remarks
 Compared to [Badoo's MVICore](https://github.com/badoo/MVICore) it seems that is a bit less
 easy to implement features like navigation and transient messages.
-This is because the view listens to events of exclusively one type, while MVICore where has a second event type, `News`,
+This is because the view listens to events of only one type, while MVICore has a second event type, `News`,
 that is used to model one-off occurrences.
 
 ## The state
